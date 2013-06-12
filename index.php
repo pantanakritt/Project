@@ -2,16 +2,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Untitled Document</title>
+<link rel="icon" href="/favicon.ico" type="image/x-icon" />
+<title>ระบบตารางเรียนตารางสอนออนไลน์</title>
 </head>
 <?php
+require ("query.php");
 require ("dbo.php");
+
 ?>
 <body>
-<?
-dbconnect();
+<?php
+c_byday('MON');
 
-dbclose();
 ?>
 </body>
 </html>
