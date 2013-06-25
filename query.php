@@ -5,190 +5,75 @@
 <title>Untitled Document</title>
 </head>
 
-<body>
+<body bgcolor="#99CCFF">
+
 </body>
 </html>
 <?php
 
-
-
-function c_byday ($day){
-$chkarry = array();
-	$sectarry = array();
-	$teacherarry = array();
+function calperiod($a1,$a2){   //function สำหรับ การคำนวนคาบเรียน
+	$sum = $a1+$a2;
+	return $sum;
+	}
 	
-	$select = "SELECT * FROM main_table"; 
+function show_teacher($refid){    //function สำหรับการ แสดงรายชื่อ อาจารย์ผู้สอน
+	$shwtea = mysql_query("SELECT * FROM teaassgn_table INNER JOIN teacher_table ON teaassgn_table.TeacherID = teacher_table.TeacherID WHERE teaassgn_table.AsgnRef = '$refid'");
+	$teanum = mysql_num_rows($shwtea);
+	for ($ii=0;$ii<=$teanum;$ii++){
+		$fetch2 = mysql_fetch_array($shwtea);
+	$teastr = $teastr.$fetch2[TeacherName];
+	
+	}
+	return $teastr;
+	}
+
+function c_byday ($day){    //แสดงตารางสอนเรียงตาม วันแต่ละวันในสัปดาห์
+	
+	$select = "SELECT DISTINCT main_table.AsgnRef,main_table.CourseID,main_table.Room,major_table.MajorName,main_table.Day,main_table.StartTime,course_table.Theory,course_table.Practical,course_table.CourseName FROM main_table"; 
 	$join1 = " INNER JOIN course_table ON main_table.CourseID = course_table.CourseID";
 	$join2 = " INNER JOIN major_table ON main_table.MajorID = major_table.MajorID";
-	$join3 = " INNER JOIN teacher_table ON main_table.TeacherID = teacher_table.TeacherID";
-	$join4 = " INNER JOIN merge_table ON main_table.MergeID = merge_table.MergeID";
+	
 	$wheres = " WHERE Day = '$day' ORDER BY main_table.Room";
 	
-	$query = mysql_query($select.$join1.$join2.$join3.$join4.$wheres);
+	$query = mysql_query($select.$join1.$join2.$wheres);
 	$numrow = mysql_num_rows($query);
 	
+	
+	echo $select.$join1.$join2.$wheres;
+	echo "<br><br>";
+	print_r($fetch);
+	
 echo "<div align='center'> ตารางการใช้ห้องเรียนประจำวัน ".$day."</div><br><br>";
-echo "<table border='1'>";
 
-	for ($x=0;$x<=$numrow;$x++){
-		if ($x!=0)$row_co = mysql_fetch_array($query);		
-		
-	if (chk_col($row_co[MergeID])) {		
-	echo "<tr>";
-	if ($x==0){
-			echo "<td>ห้อง/คาบ</td>";
-			}
-			else {
-				echo "<td>".$row_co[Room]."</td>";
-				}
-	if ($x==0){
-		for ($i=1;$i<=14;$i++) echo "<td>".$i."</td>";
-		}	
-		else {
-	for ($y=1;$y<12;$y++)
-	{
-		
-		
-  		if ($y!=$row_co[StartTime]){
-			echo "<td width='40'></td>";
-			}
-			else {
-//-------------------------------------------------------------------chkmerge				
-				$query2 = mysql_query($select.$join1.$join2.$join3.$join4.$wheres);
-				for ($y1=1;$y1<=$numrow;$y1++){
-				$fetch2 = mysql_fetch_array($query2);
-				if ($row_co[MergeID]==$fetch2[MergeID]){
-					array_push($chkarry,$fetch2[MergeID]);
-					if ($row_co[MergeType]=="ST"){
-						array_push($sectarry,$fetch2[Section]);
-						array_push($teacherarry,$fetch2[TeacherName]);
-						}
-						else if ($row_co[MergeType]=="T"){
-							array_push($teacherarry,$fetch2[TeacherName]);
-							}
-							else if ($row_co[MergeType]=="S"){
-								array_push($sectarry,$fetch2[Section]);
-								}
+
+echo "<table border='1'>"; //เปิด Table
+echo "<tr>";    //Tr บรรทัดแรก
+
+for ($xi=0;$xi<=14;$xi++){    //for สำหรับ บอก คาบเรียน
+		if ($xi==0) echo "<td align='center'>ห้อง / คาบ</td>";
+		else echo "<td>".$xi."</td>";
+		}
+echo "</tr>";   //ปิด Tr บรรทัดแรก
+
+for ($i=0;$i<$numrow;$i++){  //for เพื่อกำหนด แถว
+	$fetch = mysql_fetch_array($query);	//fetch ข้อมูล
+	echo "<tr>"; 
+	
+	
+	for ($x=0;$x<=14;$x++){ //for เพื่อนกำหนด Col
+		if ($x==0) echo "<td align='center'>".$fetch[Room]."</td>";  //เช็คเงื่อน ไข หาก x เป็น 0 ให้ echo ห้องเรียน
+			else if ($fetch[StartTime]==$x){
+					echo "<td align='center' colspan='".calperiod($fetch[Theory],$fetch[Practical])."'>".$fetch[CourseName]."<br>".show_teacher($fetch[AsgnRef])."</td>";
+					$x += calperiod($fetch[Theory],$fetch[Practical])-1;
 					}
-					
-				}
-	//------------------------------------------------------------merge_str			
-				if (count($teacherarry)>1){
-		for ($x1=0;$x1<count($teacherarry);$x1++){
-		$teachfin = $teachfin.$teacherarry[$x1];
-		}
+			else echo "<td></td>";
+			
 	}
-		else {
-			$teachfin = $row_co[TeacherName];
-			}
-		
-	if (count($sectarry)>1){
-		for ($x1=0;$x1<count($sectarry);$x1++){
-		$sectfin = $sectfin.$sectarry[$x1];
-		}
-	}
-	else {
-		$sectfin = $row_co[Section];
-		}
-		$finmerge = array($sectfin,$teachfin);
-//--------------------------------------------------------------------------show data
-echo "<td colspan = ".merge_period($row_co[StartTime],$row_co[Theory],$row_co[Practical])." align='center'>".$row_co[CourseName]."<br>".$finmerge[0]."<br>".$finmerge[1]."</td>";		
-		$sectarry = array();
-		$teacherarry = array();
+	echo "</tr>";
 
-		
-				//merge_string($row_co[TeacherName],$row_co[Section]);
-				//show_data($finmerge,$row_co);
-				//echo "<td colspan = ".merge_period($row_co[StartTime],$row_co[Theory],$row_co[Practical])." align='center'>".$row_co[CourseName]."<br>".$row_co[TeacherName]."</td>";
-				
-				
-				}
-				
-				
-				
-				
- 		}
-	}
- 	echo "</tr>";
-	}
-	}
-	echo "</table>";
+}
+echo "</table>";
 	
-	print_r($chkarry);
-	print_r($sectarry);
-	print_r($teacherarry);
-	
-	}
-
-
-
-
-
-
-function show_data ($message,$row_co){
-	echo "<td colspan = ".merge_period($row_co[StartTime],$row_co[Theory],$row_co[Practical])." align='center'>".$row_co[CourseName]."<br>".$message[0]."<br>".$message[1]."</td>";
-	
-	}
-
-function chk_col ($col){
-	for ($x2=0;$x2<count($chkarry);$x2++){
-		if ($col==$chkarry[$x2]){
-			$sum++;
-			}
-			}
-			if ($sum>1)return FALSE;
-				
-				else return TRUE;
-		}
-function merge_period ($time,$theory,$Practice){
-	$sum = ($theory+$Practice);
-	return $sum;
-	
-	}
-	
-function chk_merge ($query,$row_co,$numrow){
-	$query2 = $query;
-	
-
-				for ($y1=1;$y1<=$numrow;$y1++){
-				$fetch2 = mysql_fetch_array($query2);
-				if ($row_co[MergeID]==$fetch2[MergeID]){
-					array_push($chkarry,$fetch2[MergeID]);
-					if ($row_co[MergeType]=="ST"){
-						array_push($sectarry,$fetch2[Section]);
-						array_push($teacherarry,$fetch2[TeacherName]);
-						}
-						else if ($row_co[MergeType]=="T"){
-							array_push($teacherarry,$fetch2[TeacherName]);
-							}
-							else if ($row_co[MergeType]=="S"){
-								array_push($sectarry,$fetch2[Section]);
-								}
-					}
-					
-				}
-				
-		}
-
-function merge_string ($teacher,$section){
-	if (count($teacherarry)>1){
-		for ($x1=0;$x1<count($teacherarry);$x1++){
-		$teachfin = $teachfin.$teacherarry[$x1];
-		}
-	}
-		else {
-			$teachfin = $teacher;
-			}
-		
-	if (count($sectarry)>1){
-		for ($x1=0;$x1<count($sectarry);$x1++){
-		$sectfin = $sectfin.$sectarry[$x1];
-		}
-	}
-	else {
-		$sectfin = $section;
-		}
-		$finmerge = array($sectfin,$teachfin);
-		return $finmerge;
 	}
 ?>
+
