@@ -21,15 +21,34 @@ function show_teacher($refid){    //function สำหรับการ แส�
 	$teanum = mysql_num_rows($shwtea);
 	for ($ii=0;$ii<$teanum;$ii++){
 		$fetch2 = mysql_fetch_array($shwtea);
-	$teastr = $teastr.$fetch2[TeacherTitle].$fetch2[TeacherName]." , ";
+	$teastr = $teastr.$fetch2[TeacherTitle].$fetch2[TeacherName];
+	if ($ii != ($teanum-1)) $teastr = $teastr." , ";
 	
 	}
 	return $teastr;
 	}  //ปิด function
 	
-function cal_room($roomid){
+function count_sect($refid2){
+	$querychk_sect = mysql_query("SELECT COUNT(main_table.AsgnRef) FROM main_table WHERE main_table.AsgnRef = '$refid2'");
+	$fetchchk_sect = mysql_fetch_array($querychk_sect);
+	$queryfetch_sect = mysql_query("SELECT * FROM main_table WHERE AsgnRef = '$refid2'");
+	$sumsect = "Section : ";
+	if ($fetchchk_sect[0] == 1){
+		$fectch_sect = mysql_fetch_array($queryfetch_sect);
+		$sumsect = $sumsect.$fectch_sect[Section];
+		return $sumsect;
+		}
+	else{
+	$num_sect = mysql_num_rows($queryfetch_sect);
 	
-	
+	for ($xf=0;$xf<$num_sect;$xf++){
+		$fectchk2_sect = mysql_fetch_array($queryfetch_sect);
+		$sumsect = $sumsect.$fectchk2_sect[Section];
+		if ($xf != ($num_sect - 1)) $sumsect = $sumsect." , ";
+		
+		}
+		return $sumsect;
+	}
 	}
 
 function c_byday ($day){    //แสดงตารางสอนเรียงตาม วันแต่ละวันในสัปดาห์
@@ -72,14 +91,14 @@ for ($i=0;$i<$numrow;$i++){  //for เพื่อกำหนด แถว
 			 $fetch3 = mysql_fetch_array($query3);
 			 if ($fetch3[0]>1){
 				 $stack += 1;
-				 echo "<td align='center' bgcolor='#CCFF99' colspan='".calperiod($fetch[Theory],$fetch[Practical])."'>".$fetch[CourseName]."<br>".show_teacher($fetch[AsgnRef])."</td>";
+				 echo "<td align='center' bgcolor='#CCFF99' colspan='".calperiod($fetch[Theory],$fetch[Practical])."'>".$fetch[CourseName]."<br>".show_teacher($fetch[AsgnRef])."<br>".count_sect($fetch[AsgnRef])."</td>";
 					$x += calperiod($fetch[Theory],$fetch[Practical])-1;
 					if ($stack!=$fetch3[0]) $fetch = mysql_fetch_array($query);
 					else $i++;
 				 }
 			 
 				else if ($fetch3[0]==1) {
-					echo "<td align='center' bgcolor='#CCFF99' colspan='".calperiod($fetch[Theory],$fetch[Practical])."'>".$fetch[CourseName]."<br>".show_teacher($fetch[AsgnRef])."</td>";
+					echo "<td align='center' bgcolor='#CCFF99' colspan='".calperiod($fetch[Theory],$fetch[Practical])."'>".$fetch[CourseName]."<br>".show_teacher($fetch[AsgnRef])."<br>".count_sect($fetch[AsgnRef])."</td>";
 					$x += calperiod($fetch[Theory],$fetch[Practical])-1;
 				}
 					}
