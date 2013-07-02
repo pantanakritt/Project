@@ -50,10 +50,13 @@ function count_sect($refid2){
 		return $sumsect;
 	}
 	}
+function chk_samevalueRoom(){    //ฟังก์ชั่นสำหรับตรวจสอบในกรณีที่มี section ที่ใช้ห้องเรียนเวลาเดียวกัน
+	
+	}
 
 function c_byday ($day){    //แสดงตารางสอนเรียงตาม วันแต่ละวันในสัปดาห์
 	
-	$select = "SELECT DISTINCT main_table.AsgnRef,main_table.CourseID,main_table.Room,major_table.MajorName,main_table.Day,main_table.StartTime,course_table.Theory,course_table.Practical,course_table.CourseName FROM main_table"; 
+	$select = "SELECT DISTINCT main_table.AsgnRef ,main_table.CourseID,main_table.Room,major_table.MajorName,main_table.Day,main_table.StartTime,course_table.Theory,course_table.Practical,course_table.CourseName FROM main_table"; 
 	$join1 = " INNER JOIN course_table ON main_table.CourseID = course_table.CourseID";
 	$join2 = " INNER JOIN major_table ON main_table.MajorID = major_table.MajorID";
 	
@@ -82,7 +85,7 @@ echo "</tr>";   //ปิด Tr บรรทัดแรก
 for ($i=0;$i<$numrow;$i++){  //for เพื่อกำหนด แถว
 	$fetch = mysql_fetch_array($query);	//fetch ข้อมูล
 	echo "<tr>"; 
-	
+	$stack = 0;
 	
 	for ($x=0;$x<=14;$x++){ //for เพื่อนกำหนด Col
 		if ($x==0) echo "<td align='center'>".$fetch[Room]."</td>";  //เช็คเงื่อน ไข หาก x เป็น 0 ให้ echo ห้องเรียน
@@ -111,5 +114,6 @@ for ($i=0;$i<$numrow;$i++){  //for เพื่อกำหนด แถว
 echo "</table>";
 	
 	}
+	
 ?>
 
