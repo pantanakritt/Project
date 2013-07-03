@@ -6,7 +6,7 @@
 <title>ระบบตารางเรียนตารางสอนออนไลน์</title>
 </head>
 <?php
-require ("query.php");
+require ("day.php");
 require ("dbo.php");
 
 ?>
