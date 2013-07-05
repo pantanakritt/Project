@@ -84,13 +84,18 @@ for ($xi=0;$xi<=14;$xi++){
 echo "</tr>";   //ปิด Tr บรรทัดแรก
 
 for ($i=0;$i<$numrow;$i++){  //for เพื่อกำหนด แถว
-	$fetch = mysql_fetch_array($query);	//fetch ข้อมูล
+
+		if ($i<($numrow-1))
+			$fetch = mysql_fetch_array($query);	//fetch ข้อมูล
+			
 	echo "<tr>"; 
 	$stack = 0;
 	for ($x=0;$x<=14;$x++){ //for เพื่อนกำหนด Col
-		if ($x==0) 
+		if ($x==0) { 
 			echo "<td align='center'>".$fetch[Room]."</td>";  //เช็คเงื่อน ไข หาก x เป็น 0 ให้ echo ห้องเรียน
-		else if ($fetch[StartTime]==$x){
+			$room_chk = $fetch[Room];
+		}
+		else if ($fetch[StartTime]==$x&&$room_chk==$fetch[Room]){
 			
 			$sql_class_room = "SELECT COUNT(DISTINCT main_table.AsgnRef,main_table.Room) FROM main_table ";
 			$sql_class_room .= "WHERE main_table.Room = '$fetch[Room]' ORDER BY main_table.Room,main_table.StartTime";
@@ -100,20 +105,23 @@ for ($i=0;$i<$numrow;$i++){  //for เพื่อกำหนด แถว
 			
 			if ($fetch3[0]>1){
 				
-				$stack += 1;
+				
 				echo "<td align='center' bgcolor='#CCFF99' colspan='".calperiod($fetch[Theory],$fetch[Practical])."'>";
 				echo $fetch[CourseName]."<br>";
 				echo show_teacher($fetch[AsgnRef])."<br>";
 				echo count_sect($fetch[AsgnRef]);
 				echo "</td>";
 				
+				
 				$x += calperiod($fetch[Theory],$fetch[Practical])-1;
-				if ($stack!=$fetch3[0]) 
-					$fetch = mysql_fetch_array($query);
+				
+				$stack += 1;
+				if ($stack<$fetch3[0]) {
+						$fetch = mysql_fetch_array($query);
+				}
 				else 
 					$i++;
-					
-			}
+				}
 			else if ($fetch3[0]==1) {
 				
 				echo "<td align='center' bgcolor='#CCFF99' colspan='".calperiod($fetch[Theory],$fetch[Practical])."'>";

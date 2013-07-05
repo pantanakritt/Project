@@ -8,6 +8,7 @@
 <?php
 require ("day.php");
 require ("dbo.php");
+require ("teacher.php");
 
 ?>
 <body>
@@ -15,7 +16,7 @@ require ("dbo.php");
 
 echo "<div align='center'>";c_byday('MON'); echo "</div>";
 echo "<br><br><br><br><br><br><br><br>";
-echo "";
+echo "<div align='center'>";select_teacher('0101004'); echo "</div>"
 
 ?>
 </body>
