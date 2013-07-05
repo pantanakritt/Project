@@ -12,7 +12,10 @@ require ("dbo.php");
 ?>
 <body>
 <?php
-echo "<div align='center'>";c_byday('MON'); echo "</a>";
+
+echo "<div align='center'>";c_byday('MON'); echo "</div>";
+echo "<br><br><br><br><br><br><br><br>";
+echo "";
 
 ?>
 </body>
