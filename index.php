@@ -6,17 +6,20 @@
 <title>ระบบตารางเรียนตารางสอนออนไลน์</title>
 </head>
 <?php
-require ("day.php");
-require ("dbo.php");
-require ("teacher.php");
+require ("function/day.php");
+require ("function/dbo.php");
+require ("function/teacher.php");
+require ("function/room.php");
 
 ?>
 <body>
 <?php
 
 echo "<div align='center'>";c_byday('MON'); echo "</div>";
-echo "<br><br><br><br><br><br><br><br>";
-echo "<div align='center'>";select_teacher('0101004'); echo "</div>"
+echo "<br><br><br><br><br>";
+echo "<div align='center'>";select_teacher('0101002'); echo "</div>";
+echo "<br><br><br><br><br>";
+echo "<div align='center'>";select_room('832'); echo "</div>"
 
 ?>
 </body>
