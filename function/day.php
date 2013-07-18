@@ -57,16 +57,15 @@ function chk_samevalueRoom(){    //ฟังก์ชั่นสำหรับ
 function c_byday ($day){    //แสดงตารางสอนเรียงตาม วันแต่ละวันในสัปดาห์
 	
 	$select = "SELECT DISTINCT main_table.AsgnRef ,main_table.CourseID,main_table.Room,major_table.MajorName,main_table.Day,main_table.StartTime,course_table.Theory,course_table.Practical,course_table.CourseName FROM main_table"; 
-	$join1 = " INNER JOIN course_table ON main_table.CourseID = course_table.CourseID";
-	$join2 = " INNER JOIN major_table ON main_table.MajorID = major_table.MajorID";
+	$select .= " INNER JOIN course_table ON main_table.CourseID = course_table.CourseID";
+	$select .= " INNER JOIN major_table ON main_table.MajorID = major_table.MajorID";
+	$select .= " WHERE Day = '".$day."' ORDER BY main_table.Room,main_table.StartTime";
 	
-	$wheres = " WHERE Day = '$day' ORDER BY main_table.Room,main_table.StartTime";
-	
-	$query = mysql_query($select.$join1.$join2.$wheres);
+	$query = mysql_query($select);
 	$numrow = mysql_num_rows($query);
 	
 	
-	//echo $select.$join1.$join2.$wheres;
+	echo $select;
 	echo "<br><br>";
 	print_r($fetch);
 	
@@ -115,7 +114,7 @@ for ($i=0;$i<$numrow;$i++){  //for เพื่อกำหนด แถว
 				
 				$x += calperiod($fetch[Theory],$fetch[Practical])-1;
 				
-				$stack += 1;
+				$stack +=1;
 				if ($stack<$fetch3[0]) {
 						$fetch = mysql_fetch_array($query);
 				}
