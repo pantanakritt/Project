@@ -4,7 +4,7 @@ require_once("teacher.php");
 function select_room($rid){
 
 	
-	echo "<div align='center'><font color='blue'>ตารางการใช้ห้องเรียน ประจำห้อง ".$rid."</font></div><br><table border='1'>";
+	echo "<div align='center'><font color='blue'>ตารางการใช้ห้องเรียน ประจำห้อง ".$rid."</font></div><br><table class='table table-bordered'>";
 	for ($y=0;$y<8;$y++){
 		$tquery2 = "SELECT teaassgn_table.AsgnRef,course_table.CourseName,course_table.CourseID,main_table.Room,main_table.Day,major_table.MajorName,course_table.Theory,course_table.Practical,main_table.StartTime,teaassgn_table.TeacherID ";
 		$tquery2 .= "From main_table ";
@@ -22,15 +22,15 @@ function select_room($rid){
 	for ($x=0;$x<=14;$x++){
 		
 		if ($x==0&&$y==0){
-			echo "<td align='center'>วัน / คาบ</td>";
+			echo "<th align='center'>วัน / คาบ</td>";
 			}
 			else if ($x==0&&$y!=0){
-				echo "<td align='center'>".nday($y)."</td>";
+				echo "<th>".nday($y)."</td>";
 				
 				}
 			
 			else if ($x!=0&&$y==0){
-				echo "<td align='center'>".$x."</td>";
+				echo "<th align='center'>".$x."</td>";
 				}
 				else if ($x!=0&&$y!=0){
 					

@@ -65,33 +65,33 @@ function c_byday ($day){    //แสดงตารางสอนเรีย�
 	$numrow = mysql_num_rows($query);
 	
 	
-	echo $select;
+	//echo $select;
 	echo "<br><br>";
-	print_r($fetch);
+	//print_r($fetch);
 	
 echo "<div align='center'> ตารางการใช้ห้องเรียนประจำวัน ".$day."</div><br><br>";
 
 
-echo "<table border='1' bgcolor='#FF99CC'>"; //เปิด Table
-echo "<tr height='30'>";    //Tr บรรทัดแรก
+echo "<table class='table table-bordered'>"; //เปิด Table
+echo "<tr class='success'>";    //Tr บรรทัดแรก
 
 for ($xi=0;$xi<=14;$xi++){    
 	//for สำหรับ บอก คาบเรียน
-	if ($xi==0) echo "<td align='center'>ห้อง / คาบ</td>";
-	else echo "<td align='center'>".$xi."</td>";
+	if ($xi==0) echo "<th align='center'>ห้อง / คาบ</td>";
+	else echo "<th align='center'>".$xi."</td>";
 }
-echo "</tr>";   //ปิด Tr บรรทัดแรก
+echo "</tr >";   //ปิด Tr บรรทัดแรก
 
 for ($i=0;$i<$numrow;$i++){  //for เพื่อกำหนด แถว
 
 		if ($i<($numrow-1))
 			$fetch = mysql_fetch_array($query);	//fetch ข้อมูล
 			
-	echo "<tr>"; 
+	echo "<tr'>"; 
 	$stack = 0;
 	for ($x=0;$x<=14;$x++){ //for เพื่อนกำหนด Col
 		if ($x==0) { 
-			echo "<td align='center'>".$fetch[Room]."</td>";  //เช็คเงื่อน ไข หาก x เป็น 0 ให้ echo ห้องเรียน
+			echo "<th align='center'>".$fetch[Room]."</td>";  //เช็คเงื่อน ไข หาก x เป็น 0 ให้ echo ห้องเรียน
 			$room_chk = $fetch[Room];
 		}
 		else if ($fetch[StartTime]==$x&&$room_chk==$fetch[Room]){
