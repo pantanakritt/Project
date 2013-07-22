@@ -66,32 +66,34 @@ function c_byday ($day){    //แสดงตารางสอนเรีย�
 	
 	
 	//echo $select;
-	echo "<br><br>";
+	
 	//print_r($fetch);
 	
 echo "<div align='center'> ตารางการใช้ห้องเรียนประจำวัน ".$day."</div><br><br>";
 
 
-echo "<table class='table table-bordered'>"; //เปิด Table
+echo "<table class='table table-bordered'  >"; //เปิด Table
 echo "<tr class='success'>";    //Tr บรรทัดแรก
 
 for ($xi=0;$xi<=14;$xi++){    
 	//for สำหรับ บอก คาบเรียน
-	if ($xi==0) echo "<th align='center'>ห้อง / คาบ</td>";
-	else echo "<th align='center'>".$xi."</td>";
+	if ($xi==0) echo "<td><center>ห้อง / คาบ</center></td>";
+	else echo "<td><center>".$xi."</center></td>";
 }
-echo "</tr >";   //ปิด Tr บรรทัดแรก
+echo "</tr>";   //ปิด Tr บรรทัดแรก
+$trcount = 1;
 
 for ($i=0;$i<$numrow;$i++){  //for เพื่อกำหนด แถว
 
 		if ($i<($numrow-1))
 			$fetch = mysql_fetch_array($query);	//fetch ข้อมูล
-			
-	echo "<tr'>"; 
+	if (($trcount%2)!=0) echo "<tr class='info'>";	
+	else echo "<tr class='success'>"; 
+	$trcount ++;
 	$stack = 0;
 	for ($x=0;$x<=14;$x++){ //for เพื่อนกำหนด Col
 		if ($x==0) { 
-			echo "<th align='center'>".$fetch[Room]."</td>";  //เช็คเงื่อน ไข หาก x เป็น 0 ให้ echo ห้องเรียน
+			echo "<td><center>".$fetch[Room]."</center></td>";  //เช็คเงื่อน ไข หาก x เป็น 0 ให้ echo ห้องเรียน
 			$room_chk = $fetch[Room];
 		}
 		else if ($fetch[StartTime]==$x&&$room_chk==$fetch[Room]){
@@ -105,7 +107,7 @@ for ($i=0;$i<$numrow;$i++){  //for เพื่อกำหนด แถว
 			if ($fetch3[0]>1){
 				
 				
-				echo "<td align='center' bgcolor='#CCFF99' colspan='".calperiod($fetch[Theory],$fetch[Practical])."'>";
+				echo "<td align='center' id='tcolor' colspan='".calperiod($fetch[Theory],$fetch[Practical])."'>";
 				echo $fetch[CourseName]."<br>";
 				echo show_teacher($fetch[AsgnRef])."<br>";
 				echo count_sect($fetch[AsgnRef]);
@@ -123,7 +125,7 @@ for ($i=0;$i<$numrow;$i++){  //for เพื่อกำหนด แถว
 				}
 			else if ($fetch3[0]==1) {
 				
-				echo "<td align='center' bgcolor='#CCFF99' colspan='".calperiod($fetch[Theory],$fetch[Practical])."'>";
+				echo "<td align='center' id='tcolor' colspan='".calperiod($fetch[Theory],$fetch[Practical])."'>";
 				echo $fetch[CourseName]."<br>";
 				echo show_teacher($fetch[AsgnRef])."<br>";
 				echo count_sect($fetch[AsgnRef])."</td>";

@@ -54,7 +54,7 @@ function select_room($rid){
 	}
 	echo "</table>";
 	
-	echo "<br>";
+	
 	}
 	
 	
