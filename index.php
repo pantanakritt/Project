@@ -101,28 +101,36 @@ require ("function/stdgroup.php");
   				<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
     				<li class="dropdown-submenu"><a tabindex="-1" href="#">แสดงโดยเรียงตามวัน</a>
     				<ul class="dropdown-menu">
-    					<li>MON</li>
-    					<li>TUE</li>
-    					<li>WED</li>
-    					<li>THU</li>
+    					<?php
+              require_once("function/gadget.php");
+                show_day();
+              ?>
+
+
     				</ul>	
     				</li>
     				<li class="dropdown-submenu"><a tabindex="-1" href="#">แสดงโดยเรียงตามห้อง</a>
     				<ul class="dropdown-menu">
-    					<li>823</li>
-    					<li>824</li>
+    					<?php
+              require_once("function/gadget.php");
+                call_roomnumber();
+              ?>
     					</ul>
     				</li>
     			<li class="dropdown-submenu"><a tabindex="-1" href="#">แสดงโดยเรียงตามกลุ่มเรียน</a>
     				<ul class="dropdown-menu">
-    					<li>Com-sci(520423801)</li>
-    					<li>IT(520429701)</li>
+    					<?php
+                require_once("function/gadget.php");
+                show_group();
+              ?>
     					</ul>
     			</li>
     			<li class="dropdown-submenu"><a tabindex="-1" href="#">แสดงโดยเรียงตามผู้สอน</a>
     				<ul class="dropdown-menu">
-    					<li>อ.เณริสา อ่อนขำ</li>
-    					<li>อ.กฤษณ์ ชัยวัณณคุปต์</li>
+    					<?php
+                require_once("function/gadget.php");
+                show_teachers();
+              ?>
     					</ul>
     			</li>
   				</ul>
