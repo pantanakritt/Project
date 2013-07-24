@@ -7,7 +7,10 @@ $numrows = mysql_num_rows($sqlquery);
 
 	for ($x=1;$x<=$numrows;$x++){
 	$fetch = mysql_fetch_array($sqlquery);
-	echo "<li><a tabindex='-1' href='#''>".$fetch[Room]."</a></li>";
+	echo "<li><a tabindex='-1' href='#' class='search_from_room'>";
+	echo "<input type='hidden' class='roomID' value='".$fetch[Room]."'>";
+	echo $fetch[Room];
+	echo "</a></li>";
 
 	}
 }
@@ -20,7 +23,10 @@ $numrows = mysql_num_rows($sqlquery);
 
 	for ($x=1;$x<=$numrows;$x++){
 	$fetch = mysql_fetch_array($sqlquery);
-	echo "<li><a tabindex='-1' href='#''>".$fetch[Day]."</a></li>";
+	echo "<li><a tabindex='-1' href='#' class='search_from_day'>";
+	echo "<input type='hidden' class='dayID' value='".$fetch[Day]."'>";
+	echo $fetch[Day];
+	echo "</a></li>";
 
 	}
 }
@@ -32,7 +38,10 @@ $numrows = mysql_num_rows($sqlquery);
 
 	for ($x=1;$x<=$numrows;$x++){
 	$fetch = mysql_fetch_array($sqlquery);
-	echo "<li><a tabindex='-1' href='#''>".$fetch[MajorName]."&nbsp;(".$fetch[MajorID].")</a></li>";
+	echo "<li><a tabindex='-1' href='#' class='search_from_group'>";
+	echo $fetch[MajorName]."&nbsp;(".$fetch[MajorID].")";
+	echo "<input type='hidden' class='groupID' value='".$fetch[MajorID]."'>";
+	echo "</a></li>";
 
 	}
 }
@@ -45,8 +54,45 @@ $numrows = mysql_num_rows($sqlquery);
 
 	for ($x=1;$x<=$numrows;$x++){
 	$fetch = mysql_fetch_array($sqlquery);
-	echo "<li><a tabindex='-1' href='#''>".$fetch[TeacherName]."&nbsp;&nbsp;".$fetch[TeacherLastname]."</a></li>";
+	echo "<li><a tabindex='-1' href='#' class='search_from_teacher'>";
+	echo $fetch[TeacherName]."&nbsp;&nbsp;".$fetch[TeacherLastname];
+	echo "<input type='hidden' class='teacherID' value='".$fetch[TeacherID]."'>";
+	echo "</a></li>";
 	}
 }
+
+function login(){
+	?>
+    <div id="Login" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Log In</h3>
+  </div>
+  <div class="modal-body">
+  
+   <div class = "updatelogin"></div>
+
+   <form>
+  <fieldset>
+    <label>Username</label>
+    <input type="text" class="userlogin" placeholder="พิมพ์ชื่อผู้ใช้ของท่าน">
+    </label>
+    <label>Password</label>
+    <input type="password" class="passwordlogin" placeholder="พิมพ์รหัสผ่าน">
+     </label>
+    
+  </fieldset>
+</form>
+   
+    
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-primary loginuser">Log In</button>
+  </div>
+</div>
+
+	<?
+	}
 
 ?>

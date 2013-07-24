@@ -4,7 +4,7 @@ require_once("teacher.php");
 function select_room($rid){
 
 	
-	echo "<div align='center'><font color='blue'>ตารางการใช้ห้องเรียน ประจำห้อง ".$rid."</font></div><br><table class='table table-bordered'>";
+	echo "<br><br><div align='center'><font color='blue'>ตารางการใช้ห้องเรียน ประจำห้อง ".$rid."</font></div><br><table class='table table-bordered'>";
 	for ($y=0;$y<8;$y++){
 		$tquery2 = "SELECT teaassgn_table.AsgnRef,course_table.CourseName,course_table.CourseID,main_table.Room,main_table.Day,major_table.MajorName,course_table.Theory,course_table.Practical,main_table.StartTime,teaassgn_table.TeacherID ";
 		$tquery2 .= "From main_table ";
@@ -18,19 +18,20 @@ function select_room($rid){
 		
 		//echo $tquery2;
 		$stack = 1;
-		echo "<tr>";
+		if (($y%2)==0)echo "<tr class='success'>";
+		else echo "<tr class='info'>";
 	for ($x=0;$x<=14;$x++){
 		
 		if ($x==0&&$y==0){
-			echo "<th align='center'>วัน / คาบ</td>";
+			echo "<td>วัน / คาบ</td>";
 			}
 			else if ($x==0&&$y!=0){
-				echo "<th>".nday($y)."</td>";
+				echo "<td>".nday($y)."</td>";
 				
 				}
 			
 			else if ($x!=0&&$y==0){
-				echo "<th align='center'>".$x."</td>";
+				echo "<td align='center'>".$x."</td>";
 				}
 				else if ($x!=0&&$y!=0){
 					
@@ -39,7 +40,7 @@ function select_room($rid){
 					
 					
 					if ($t2fetch[Day]==nday($y)&&$t2fetch[StartTime]==$x){
-					echo "<td align='center' colspan='".calperiod($t2fetch[Theory],$t2fetch[Practical])."' >".$t2fetch[CourseName]."(".$t2fetch[CourseID].")<br>".count_sect($t2fetch[AsgnRef])."&nbsp;&nbsp;".$t2fetch[MajorName]."<div align='right'><font color ='#FF9900'> ผู้สอน : ".call_tname($t2fetch[TeacherID])."</font></div></td>";
+					echo "<td align='center' id='tcolor' colspan='".calperiod($t2fetch[Theory],$t2fetch[Practical])."' >".$t2fetch[CourseName]."(".$t2fetch[CourseID].")<br>".count_sect($t2fetch[AsgnRef])."&nbsp;&nbsp;".$t2fetch[MajorName]."<div align='right'><font color ='#FF9900'> ผู้สอน : ".call_tname($t2fetch[TeacherID])."</font></div></td>";
 					$x += calperiod($t2fetch[Theory],$t2fetch[Practical])-1;
 					$stack ++;
 					if ($stack <= $t2row) $t2fetch = mysql_fetch_array($tquery3);

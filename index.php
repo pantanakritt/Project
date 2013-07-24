@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <link rel="icon" href="/favicon.ico" type="image/x-icon" />
 <title>ระบบตารางเรียนตารางสอนออนไลน์</title>
-<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-<link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/bootstrap.css" rel="stylesheet" media="screen">
 <style type="text/css">
 
       /* Sticky footer styles
@@ -21,9 +21,9 @@
 
       /* Wrapper for page content to push down footer */
       #wrap {
-        min-height: 100%;
+        min-height: 89%;
         height: auto !important;
-        height: 100%;
+        height: 89%;
         /* Negative indent footer by it's height */
         margin: 0 auto -60px;
       }
@@ -73,23 +73,24 @@
 <?php
 require ("function/day.php");
 require ("function/dbo.php");
-require ("function/teacher.php");
-require ("function/room.php");
-require ("function/stdgroup.php");
+
 
 ?>
 <body>
-<script src="http://code.jquery.com/jquery.js"></script>
-<script src="bootstrap/js/bootstrap.min.js"></script>
-<div id="warp">
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/ajax.js"> </script>
+<div id="wrap">
 
 <div class="container-fluid">
 	<div class="row-fluid">
-		
-			<div class="span12" >
-
+    	<div class="span12" >
+<?
+require_once("function/gadget.php");
+login();
+?>
 				<div class="navbar navbar-fixed-top">
-				<p class="navbar-text pull-right"><a href="#" class ="navbar-link">SIGN IN</a> or <a href="#" class ="navbar-link">SIGN UP</a>&nbsp;&nbsp;&nbsp;</p>
+				<p class="navbar-text pull-right"><a href="#Login" class="navbar-link" data-toggle="modal"">SIGN IN</a> or <a href="#" class ="navbar-link">SIGN UP</a>&nbsp;&nbsp;&nbsp;</p>
   <div class="navbar-inner">
     <a class="brand" href="#">&nbsp;&nbsp;&nbsp;ระบบตารางเรียนตารางสอนออนไลน์</a>
     <ul class="nav">
@@ -148,8 +149,8 @@ require ("function/stdgroup.php");
     <div class="span1">
       <!--LEFT SIDE -->
     </div>
-    <div class="span10" >
-    <br><br>
+    <div class="span10 updates" >
+    
     <?
 
       echo "<div align='center'>";c_byday('MON'); echo "</div>";
@@ -168,7 +169,6 @@ require ("function/stdgroup.php");
   <div id="push"></div>
   </div>
   <hr>
-
   <div id="footer">
   <div class="container">
 

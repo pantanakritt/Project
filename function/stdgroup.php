@@ -2,7 +2,7 @@
 require_once ("teacher.php");
 function select_group($majorid){
 	$mfetch = mysql_fetch_array(mysql_query("select * from major_table where MajorID = '$majorid'"));
-	echo "<div align='center'><font color='blue'>ตารางเรียนสำหรับกลุ่มเรียน ".$mfetch[MajorName]."(".$mfetch[MajorID].")</font></div><br><table class='table table-bordered'>";
+	echo "<br><br><div align='center'><font color='blue'>ตารางเรียนสำหรับกลุ่มเรียน ".$mfetch[MajorName]."(".$mfetch[MajorID].")</font></div><br><table class='table table-bordered'>";
 	for ($y=0;$y<8;$y++){
 	$rquery = "SELECT teaassgn_table.AsgnRef, course_table.CourseName, course_table.CourseID, main_table.Room, main_table.Day, major_table.MajorID, major_table.MajorName, course_table.Theory, course_table.Practical, main_table.StartTime, teaassgn_table.TeacherID
 FROM main_table";
@@ -15,19 +15,20 @@ $rquery .= " ORDER BY main_table.StartTime";
 		$r2row = mysql_num_rows($rquery2);
 		$r2fetch = mysql_fetch_array($rquery2);
 		$stack = 1;
-		echo "<tr>";
+		if (($y%2)==0)echo "<tr class='success'>";
+		else echo "<tr class='info'>";
 	for ($x=0;$x<=14;$x++){
 		
 		if ($x==0&&$y==0){
-			echo "<th align='center'>วัน / คาบ</td>";
+			echo "<td align='center'>วัน / คาบ</td>";
 			}
 			else if ($x==0&&$y!=0){
-				echo "<th align='center'>".nday($y)."</td>";
+				echo "<td align='center'>".nday($y)."</td>";
 				
 				}
 			
 			else if ($x!=0&&$y==0){
-				echo "<th align='center'>".$x."</td>";
+				echo "<td align='center'>".$x."</td>";
 				}
 				else if ($x!=0&&$y!=0){
 					
@@ -36,7 +37,7 @@ $rquery .= " ORDER BY main_table.StartTime";
 					
 					
 					if ($r2fetch[Day]==nday($y)&&$r2fetch[StartTime]==$x){
-					echo "<td align='center' colspan='".calperiod($r2fetch[Theory],$r2fetch[Practical])."' >".$r2fetch[CourseName]."(".$r2fetch[CourseID].")<br>".count_sect($r2fetch[AsgnRef])."&nbsp;&nbsp;".call_tname($r2fetch[TeacherID])."<div align='right'><font color ='#FF9900'> ห้องเรียน : ".$r2fetch[Room]."</font></div></td>";
+					echo "<td align='center' id='tcolor' colspan='".calperiod($r2fetch[Theory],$r2fetch[Practical])."' >".$r2fetch[CourseName]."(".$r2fetch[CourseID].")<br>".count_sect($r2fetch[AsgnRef])."&nbsp;&nbsp;".call_tname($r2fetch[TeacherID])."<div align='right'><font color ='#FF9900'> ห้องเรียน : ".$r2fetch[Room]."</font></div></td>";
 					$x += calperiod($r2fetch[Theory],$r2fetch[Practical])-1;
 					$stack ++;
 					if ($stack <= $r2row) $r2fetch = mysql_fetch_array($rquery2);

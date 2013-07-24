@@ -22,7 +22,7 @@ function call_tname($tid){
 function select_teacher($tid){
 
 	
-	echo "<div align='center'><font color='blue'>ตารางสอนของ ".call_tname($tid)."</font></div><br><table class='table table-bordered'>";
+	echo "<br><br><div align='center'><font color='blue'>ตารางสอนของ ".call_tname($tid)."</font></div><br><table class='table table-bordered'>";
 	for ($y=0;$y<8;$y++){
 		$tquery2 = "SELECT teaassgn_table.AsgnRef,course_table.CourseName,course_table.CourseID,main_table.Room,main_table.Day,major_table.MajorName,course_table.Theory,course_table.Practical,main_table.StartTime ";
 		$tquery2 .= "From main_table INNER JOIN teaassgn_table ON main_table.AsgnRef = teaassgn_table.AsgnRef ";
