@@ -36,19 +36,20 @@ function select_teacher($tid){
 		
 		//echo $tquery2;
 		$stack = 1;
-		echo "<tr>";
+		if (($y%2)==0)echo "<tr class='success'>";
+		else echo "<tr class='info'>";
 	for ($x=0;$x<=14;$x++){
 		
 		if ($x==0&&$y==0){
-			echo "<th align='center'>วัน / คาบ</td>";
+			echo "<td align='center'>วัน / คาบ</td>";
 			}
 			else if ($x==0&&$y!=0){
-				echo "<th align='center'>".nday($y)."</td>";
+				echo "<td align='center'>".nday($y)."</td>";
 				
 				}
 			
 			else if ($x!=0&&$y==0){
-				echo "<th align='center'>".$x."</td>";
+				echo "<td align='center'>".$x."</td>";
 				}
 				else if ($x!=0&&$y!=0){
 					
@@ -57,7 +58,7 @@ function select_teacher($tid){
 					
 					
 					if ($t2fetch[Day]==nday($y)&&$t2fetch[StartTime]==$x){
-					echo "<td align='center' colspan='".calperiod($t2fetch[Theory],$t2fetch[Practical])."' >".$t2fetch[CourseName]."(".$t2fetch[CourseID].")<br>".count_sect($t2fetch[AsgnRef])."&nbsp;&nbsp;".$t2fetch[MajorName]."<div align='right'><font color ='#FF9900'> Room : ".$t2fetch[Room]."</font></div></td>";
+					echo "<td align='center' id='tcolor' colspan='".calperiod($t2fetch[Theory],$t2fetch[Practical])."' >".$t2fetch[CourseName]."(".$t2fetch[CourseID].")<br>".count_sect($t2fetch[AsgnRef])."&nbsp;&nbsp;".$t2fetch[MajorName]."<div align='right'><font color ='#FF9900'> Room : ".$t2fetch[Room]."</font></div></td>";
 					$x += calperiod($t2fetch[Theory],$t2fetch[Practical])-1;
 					$stack ++;
 					if ($stack <= $t2row) $t2fetch = mysql_fetch_array($tquery3);

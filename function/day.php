@@ -53,6 +53,17 @@ function count_sect($refid2){
 function chk_samevalueRoom(){    //ฟังก์ชั่นสำหรับตรวจสอบในกรณีที่มี section ที่ใช้ห้องเรียนเวลาเดียวกัน
 	
 	}
+	function thaiday($day){
+		$dayup = strtoupper($day);
+		if ($dayup=="MON") return "จันทร์";
+		else if ($dayup=="TUE") return "อังคาร";
+		else if ($dayup=="WED") return "พุธ";
+		else if ($dayup=="THU") return "พฤหัสบดี";
+		else if ($dayup=="FRI") return "ศุกร์";
+		else if ($dayup=="SAT") return "เสาร์";
+		else if ($dayup=="SUN") return "อาทิตย์";
+		else return "invalid";
+		}
 
 function c_byday ($day){    //แสดงตารางสอนเรียงตาม วันแต่ละวันในสัปดาห์
 	
@@ -69,7 +80,7 @@ function c_byday ($day){    //แสดงตารางสอนเรีย�
 	
 	//print_r($fetch);
 	
-echo "<br><br><div align='center'> ตารางการใช้ห้องเรียนประจำวัน ".$day."</div><br><br>";
+echo "<br><br><div align='center'> ตารางการใช้ห้องเรียนประจำ วัน".thaiday($day)."</div><br><br>";
 
 
 echo "<table class='table table-bordered'  >"; //เปิด Table

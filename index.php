@@ -1,3 +1,6 @@
+<?
+session_start();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -71,6 +74,8 @@
     </style>
 </head>
 <?php
+
+
 require ("function/day.php");
 require ("function/dbo.php");
 
@@ -147,13 +152,15 @@ login();
 	</div>
   <div class="row-fluid">
     <div class="span1">
-      <!--LEFT SIDE -->
+      <!-- LEFT SIDE -->
     </div>
     <div class="span10 updates" >
     
     <?
 
       echo "<div align='center'>";c_byday('MON'); echo "</div>";
+	  
+	  
 //echo "<br><br><br><br><br>";
 //echo "<div align='center'>";select_teacher('0101002'); echo "</div>";
 //echo "<br><br><br><br><br>";

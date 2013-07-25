@@ -1,4 +1,9 @@
-<?php
+<?
+session_start();
+
+require_once("dbo.php");
+
+
 function call_roomnumber(){
 
 $SQLsyntax = "SELECT DISTINCT(main_table.Room) FROM main_table";
@@ -75,10 +80,10 @@ function login(){
    <form>
   <fieldset>
     <label>Username</label>
-    <input type="text" class="userlogin" placeholder="พิมพ์ชื่อผู้ใช้ของท่าน">
+    <input type="text" id="userlogin" placeholder="พิมพ์ชื่อผู้ใช้ของท่าน">
     </label>
     <label>Password</label>
-    <input type="password" class="passwordlogin" placeholder="พิมพ์รหัสผ่าน">
+    <input type="password" id="passwordlogin" placeholder="พิมพ์รหัสผ่าน">
      </label>
     
   </fieldset>
@@ -94,5 +99,19 @@ function login(){
 
 	<?
 	}
+	
+	function chk_login($user,$password){
+		$loginquery = mysql_query("SELECT * FROM permission_table WHERE UserName = '$user' && Password = '$password'");
+		$nums = mysql_num_rows($loginquery);
+		$fetchlogin = mysql_fetch_array($loginquery);
+		if($nums >= 1){
+			$_session["sesid"] = session_id();
+			$_session["username"] = "55555555555555";
+			$_session["password"] = $fetchlogin[Password];
+			session_write_close();
+			return TRUE;
+			}
+			else return FALSE;
+		}
 
 ?>
