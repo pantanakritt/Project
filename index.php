@@ -95,12 +95,13 @@ require_once("function/gadget.php");
 login();
 ?>
 				<div class="navbar navbar-fixed-top">
-				<p class="navbar-text pull-right"><a href="#Login" class="navbar-link" data-toggle="modal"">SIGN IN</a> or <a href="#" class ="navbar-link">SIGN UP</a>&nbsp;&nbsp;&nbsp;</p>
-  <div class="navbar-inner">
+ <div class="navbar-inner">
     <a class="brand" href="#">&nbsp;&nbsp;&nbsp;ระบบตารางเรียนตารางสอนออนไลน์</a>
     <ul class="nav">
+    
+                
       <li class="active"><a href="#">Home</a></li>
-      <li class="dropdown"><a class="dropdown-toggle pull-right" data-toggle="dropdown" href="#">
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">
 				แสดงข้อมูลตารางเรียนตารางสอน
 			<b class="caret"></b>
 			</a>
@@ -139,10 +140,56 @@ login();
               ?>
     					</ul>
     			</li>
+               
   				</ul>
 			</a>
 	 </li>
+      
+      
     </ul>
+    <? if(chk_session()){ ?>
+    
+    <ul class="nav pull-right">
+    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">
+    ส่วนจัดการระบบ
+			<b class="caret"></b>
+			</a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            <li class="dropdown-submenu"><a tabindex="-1" href="#">จัดการข้อมูลหลัก</a>
+    				<ul class="dropdown-menu">
+                    <li><a tabindex="-1"  class="logout" href="#">เพิ่มข้อมูลตารางสอน</a></li>
+                    <li><a tabindex="-1"  class="logout" href="#">Import ข้อมูลจากไฟล์(xls)</a></li>
+                    <li><a tabindex="-1"  class="logout" href="#">แก้ไขข้อมูลตารางสอน</a></li>
+                    <li><a tabindex="-1"  class="logout" href="#">ลบข้อมูลตารางสอน</a></li>
+                    </ul>
+    	   </li>
+           <li>
+           		<a tabindex="-1"  class="logout" href="#">แก้ไขข้อมูลส่วนตัว</a>
+           
+           </li>
+          <? if ($_SESSION['SuperUser']) {?> <li>
+           		<a tabindex="-1"  class="logout" href="#">ส่วนจัดการสำหรับ Admin</a>
+           
+           </li>
+           <? } ?>
+           <li>
+           		<a tabindex="-1"  class="logout" href="#">ออกจากระบบ</a>
+           
+           </li>
+           </ul>
+    </li>
+    </ul>
+    
+    <p class="navbar-text pull-right">Loged in as : <?=$_SESSION['username']?>&nbsp;&nbsp;&nbsp;</p>
+    <? } 
+	else {
+	?>
+	
+    <p class="navbar-text pull-right"><a href="#Login" class="navbar-link" data-toggle="modal"">เข้าสู่ระบบ</a>&nbsp;&nbsp;&nbsp;</p>
+    <? } ?>
+    <p class="divider-vertical pull-right"></p>
+    
+    
   </div>
 </div>
 
@@ -167,6 +214,7 @@ login();
 //echo "<div align='center'>";select_room('832'); echo "</div>";
 //echo "<br><br><br><br><br>";
 //echo "<div align='center'>";select_group('560429701'); echo "</div>";
+
 ?>
     </div>
     <div class="span1">

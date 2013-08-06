@@ -20,7 +20,7 @@ else if ($_POST['type_view'] == "check_login"){
 	if (chk_login($_POST['user'],$_POST['password'])){
 	?>
     <script>
-	alert("คุณได้ Log in ในชื่อของ <?=$_session["username"]; ?>");
+	alert("คุณได้ Log in ในชื่อของ <?=$_SESSION['username'].session_id();?>");
     window.location.href="index.php";
     </script>
     <?
@@ -35,4 +35,10 @@ else if ($_POST['type_view'] == "check_login"){
 <?
 		}
 }
+
+else if ($_POST['type_view'] == "check_logout"){
+	session_destroy();
+	echo "<script>window.location.href='index.php'</script>";
+	
+	}
 ?>

@@ -71,7 +71,7 @@ function login(){
     <div id="Login" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Log In</h3>
+    <h3 id="myModalLabel">ลงชื่อเข้าสู่ระบบ</h3>
   </div>
   <div class="modal-body">
   
@@ -105,13 +105,22 @@ function login(){
 		$nums = mysql_num_rows($loginquery);
 		$fetchlogin = mysql_fetch_array($loginquery);
 		if($nums >= 1){
-			$_session["sesid"] = session_id();
-			$_session["username"] = "55555555555555";
-			$_session["password"] = $fetchlogin[Password];
-			session_write_close();
+			$_SESSION['sesid'] = session_id();
+			$_SESSION['username'] = $fetchlogin[UserName];
+			$_SESSION['password'] = $fetchlogin[Password];
+			$_SESSION['SuperUser'] = $fetchlogin[SuperUser];
+		
 			return TRUE;
 			}
 			else return FALSE;
+		}
+		
+	 function chk_session(){
+		if (($_SESSION['sesid']== session_id()) && isset($_SESSION['username'])    &&   isset($_SESSION['password'] )){
+			return TRUE;
+			}
+			else 
+			return FALSE;
 		}
 
 ?>

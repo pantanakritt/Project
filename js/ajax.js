@@ -28,6 +28,20 @@ $(document).ready(function(){
 			});
 		};
 		
+		var function_logout = function(type){
+			$.ajax({
+				url : "function/AjaxUpdate.php",
+				data : {
+					
+					"type_view" : type
+				},
+				type : "POST",
+				success : function(data){
+					$(".updates").html(data);
+				}
+			});
+		};
+		
 		$(".search_from_day").click(function(event){
 			event.preventDefault();
 			var dayID = $(this).children(".dayID").val();
@@ -53,6 +67,12 @@ $(document).ready(function(){
 			var user = $('#userlogin').val();
 		    var password = $('#passwordlogin').val();
 			function_login("check_login",user,password);
+			
+		});
+		
+		$(".logout").click(function(event){
+			event.preventDefault();
+			function_logout("check_logout");
 			
 		});
 	});
