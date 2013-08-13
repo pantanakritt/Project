@@ -41,6 +41,22 @@ $(document).ready(function(){
 				}
 			});
 		};
+
+		var function_status_user = function(type){
+			$.ajax({
+				url : "function/AjaxUpdate.php",
+				data : {
+					
+					"type_view" : type
+				},
+				type : "POST",
+				success : function(data){
+					$(".updates").html(data);
+				}
+			});
+		};
+
+
 		
 		$(".search_from_day").click(function(event){
 			event.preventDefault();
@@ -73,6 +89,12 @@ $(document).ready(function(){
 		$(".logout").click(function(event){
 			event.preventDefault();
 			function_logout("check_logout");
+			
+		});
+
+		$(".status_user").click(function(event){
+			event.preventDefault();
+			function_status_user("status_users");
 			
 		});
 	});

@@ -109,6 +109,10 @@ function login(){
 			$_SESSION['username'] = $fetchlogin[UserName];
 			$_SESSION['password'] = $fetchlogin[Password];
 			$_SESSION['SuperUser'] = $fetchlogin[SuperUser];
+			$_SESSION['Insert'] = $fetchlogin[Insert];
+			$_SESSION['Update'] = $fetchlogin[Update];
+			$_SESSION['Delete'] = $fetchlogin[Delete];
+			$_SESSION['StatusID'] = $fetchlogin[StatusID];
 		
 			return TRUE;
 			}

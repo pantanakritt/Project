@@ -67,6 +67,12 @@ session_start();
         margin: 20px 0;
       }
 
+      .scroll{
+        width: 250px;
+        height: 200px;
+        overflow: scroll;
+      }
+
       code {
         font-size: 80%;
       }
@@ -100,7 +106,7 @@ login();
     <ul class="nav">
     
                 
-      <li class="active"><a href="#">Home</a></li>
+      <li><a href="#">Home</a></li>
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">
 				แสดงข้อมูลตารางเรียนตารางสอน
 			<b class="caret"></b>
@@ -125,7 +131,7 @@ login();
     					</ul>
     				</li>
     			<li class="dropdown-submenu"><a tabindex="-1" href="#">แสดงโดยเรียงตามกลุ่มเรียน</a>
-    				<ul class="dropdown-menu">
+    				<ul class="dropdown-menu scroll">
     					<?php
                 require_once("function/gadget.php");
                 show_group();
@@ -140,11 +146,13 @@ login();
               ?>
     					</ul>
     			</li>
-               
+
   				</ul>
 			</a>
 	 </li>
-      
+      <li>
+        <a tabindex="-1" href="#">แสดงคำสั่งผู้สอน</a>
+       </li>
       
     </ul>
     <? if(chk_session()){ ?>
@@ -157,21 +165,34 @@ login();
             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
             <li class="dropdown-submenu"><a tabindex="-1" href="#">จัดการข้อมูลหลัก</a>
     				<ul class="dropdown-menu">
-                    <li><a tabindex="-1"  class="logout" href="#">เพิ่มข้อมูลตารางสอน</a></li>
-                    <li><a tabindex="-1"  class="logout" href="#">Import ข้อมูลจากไฟล์(xls)</a></li>
-                    <li><a tabindex="-1"  class="logout" href="#">แก้ไขข้อมูลตารางสอน</a></li>
-                    <li><a tabindex="-1"  class="logout" href="#">ลบข้อมูลตารางสอน</a></li>
+                    <? if($_SESSION['SuperUser']||$_SESSION['Insert']){ ?> 
+                        <li><a tabindex="-1" href="#">เพิ่มข้อมูลตารางสอน</a></li>
+
+                        <? } ?>
+                    <? if($_SESSION['SuperUser']||$_SESSION['Insert']) { ?> 
+                        <li><a tabindex="-1" href="#">Import ข้อมูลจากไฟล์(xls)</a></li>
+                        <? } ?>
+                    <? if($_SESSION['Update']||$_SESSION['SuperUser']) { ?> <li><a tabindex="-1"  href="#">แก้ไขข้อมูลตารางสอน</a></li> 
+                        <? } ?>
+                    <? if($_SESSION['Delete']||$_SESSION['SuperUser']) { ?> <li><a tabindex="-1"  href="#">ลบข้อมูลตารางสอน</a></li>
+                        <? } ?>
                     </ul>
     	   </li>
-           <li>
-           		<a tabindex="-1"  class="logout" href="#">แก้ไขข้อมูลส่วนตัว</a>
-           
-           </li>
-          <? if ($_SESSION['SuperUser']) {?> <li>
-           		<a tabindex="-1"  class="logout" href="#">ส่วนจัดการสำหรับ Admin</a>
+         <? if ($_SESSION['SuperUser']) {?> <li class="dropdown-submenu">
+              <a tabindex="-1" href="#">ส่วนจัดการสำหรับผู้ดูแลระบบ</a>
+                <ul class="dropdown-menu">
+                  <li><a tabindex="-1" href="#">เพิ่มผู้ใช้งาน</a></li>
+                  <li><a tabindex="-1" href="#">แก้ไขผู้ใช้งาน</a></li>
+                  <li ><a tabindex="-1" class='status_user' href="#">สถานะผู้ใช้งาน</a></li>
+                </ul>
            
            </li>
            <? } ?>
+           <li>
+           		<a tabindex="-1" href="#">แก้ไขข้อมูลส่วนตัว</a>
+           
+           </li>
+          
            <li>
            		<a tabindex="-1"  class="logout" href="#">ออกจากระบบ</a>
            
