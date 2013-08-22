@@ -88,7 +88,7 @@ echo "<tr class='success'>";    //Tr บรรทัดแรก
 
 for ($xi=0;$xi<=14;$xi++){    
 	//for สำหรับ บอก คาบเรียน
-	if ($xi==0) echo "<td><center>ห้อง / คาบ</center></td>";
+	if ($xi==0) echo "<td width='100'><center>ห้อง / คาบ</center></td>";
 	else echo "<td><center>".$xi."</center></td>";
 }
 echo "</tr>";   //ปิด Tr บรรทัดแรก
