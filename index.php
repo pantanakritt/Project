@@ -102,11 +102,11 @@ login();
 ?>
 				<div class="navbar navbar-fixed-top">
  <div class="navbar-inner">
-    <a class="brand" href="#">&nbsp;&nbsp;&nbsp;ระบบตารางเรียนตารางสอนออนไลน์</a>
+    <a class="brand" href="./index.php">&nbsp;&nbsp;&nbsp;ระบบตารางเรียนตารางสอนออนไลน์</a>
     <ul class="nav">
     
                 
-      <li><a href="#">Home</a></li>
+      <li><a href="./index.php">Home</a></li>
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">
 				แสดงข้อมูลตารางเรียนตารางสอน
 			<b class="caret"></b>
@@ -194,7 +194,7 @@ login();
            </li>
           
            <li>
-           		<a tabindex="-1"  class="logout" href="#">ออกจากระบบ</a>
+           		<a tabindex="-1"  class="logout" href="#"><i class="icon-off"></i>&nbsp;&nbsp;ออกจากระบบ</a>
            
            </li>
            </ul>

@@ -6,6 +6,7 @@ require_once("room.php");
 require_once("teacher.php");
 require_once("stdgroup.php");
 require_once("user.php");
+require_once("gadget.php");
 
 if($_POST['type_view'] == "from_day") c_byday($_POST['data_send']);
 
@@ -54,4 +55,9 @@ else if ($_POST['type_view'] == "check_logout"){
 	else if ($_POST['type_view'] == "status_users"){
 			user_status();
 	}
+else if ($_POST['type_view']== "ActivateID"){
+	dis_or_activate_user($_POST[userSTSid],$_POST[StatID]);
+	//echo "<br><br> username is = ".$_POST[userSTSid]." status id = ".$_POST[StatID];
+	user_status();
+}
 ?>

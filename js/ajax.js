@@ -56,6 +56,22 @@ $(document).ready(function(){
 			});
 		};
 
+		var function_status_ID = function(type,stsid,stnid){
+			$.ajax({
+				url : "function/AjaxUpdate.php",
+				data : {
+					
+					"type_view" : type,
+					"userSTSid" : stnid,
+					"StatID" : stsid
+				},
+				type : "POST",
+				success : function(data){
+					$(".updates").html(data);
+				}
+			});
+		};
+
 
 		
 		$(".search_from_day").click(function(event){
@@ -63,16 +79,19 @@ $(document).ready(function(){
 			var dayID = $(this).children(".dayID").val();
 			function_search_class("from_day",dayID);
 		});
+		
 		$(".search_from_room").click(function(event){
 			event.preventDefault();
 			var roomID = $(this).children(".roomID").val();
 			function_search_class("from_room",roomID);
 		});
+
 		$(".search_from_teacher").click(function(event){
 			event.preventDefault();
 			var teacherID = $(this).children(".teacherID").val();
 			function_search_class("from_teacher",teacherID);
 		});
+
 		$(".search_from_group").click(function(event){
 			event.preventDefault();
 			var groupID = $(this).children(".groupID").val();
@@ -95,6 +114,16 @@ $(document).ready(function(){
 		$(".status_user").click(function(event){
 			event.preventDefault();
 			function_status_user("status_users");
+			
+		});
+
+		$(".activateID").click(function(event){
+			event.preventDefault();
+			
+		    var stsid = $(this).children(".statid").val();
+		    var stnid = $(this).children(".statname").val();
+
+			function_status_ID("ActivateID",stsid,stnid);
 			
 		});
 	});

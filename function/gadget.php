@@ -127,4 +127,12 @@ function login(){
 			return FALSE;
 		}
 
+	function dis_or_activate_user($user,$IDnum){
+		if ($IDnum) $IDnum = FALSE;
+		else $IDnum = TRUE;
+
+		mysql_query("UPDATE permission_table SET StatusID='$IDnum' WHERE UserName = '$user'");
+	}
+
+
 ?>

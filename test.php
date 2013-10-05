@@ -1,8 +1,12 @@
-<?php
-session_start();
+<table>
+<tr id="test1">
+<td>
+test
+</td>
+</tr>
+</table>
 
-$_session["test"] = "dddddddd";
+<?
+echo test1.val;
 
-
-echo $_session["test"];
 ?>
