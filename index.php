@@ -98,6 +98,7 @@ require ("function/dbo.php");
     	<div class="span12" >
 <?
 require_once("function/gadget.php");
+require_once("function/user.php");
 login();
 ?>
 				<div class="navbar navbar-fixed-top">
@@ -106,7 +107,7 @@ login();
     <ul class="nav">
     
                 
-      <li><a href="./index.php">Home</a></li>
+      <li><a href="./index.php">หน้าหลัก</a></li>
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">
 				แสดงข้อมูลตารางเรียนตารางสอน
 			<b class="caret"></b>
@@ -181,7 +182,7 @@ login();
          <? if ($_SESSION['SuperUser']) {?> <li class="dropdown-submenu">
               <a tabindex="-1" href="#">ส่วนจัดการสำหรับผู้ดูแลระบบ</a>
                 <ul class="dropdown-menu">
-                  <li><a tabindex="-1" href="#">เพิ่มผู้ใช้งาน</a></li>
+                  <li><a tabindex="-1" class='add_user' href="#">เพิ่มผู้ใช้งาน</a></li>
                   <li><a tabindex="-1" href="#">แก้ไขผู้ใช้งาน</a></li>
                   <li ><a tabindex="-1" class='status_user' href="#">สถานะผู้ใช้งาน</a></li>
                 </ul>

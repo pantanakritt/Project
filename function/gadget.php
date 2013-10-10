@@ -3,7 +3,6 @@ session_start();
 
 require_once("dbo.php");
 
-
 function call_roomnumber(){
 
 $SQLsyntax = "SELECT DISTINCT(main_table.Room) FROM main_table";
@@ -87,15 +86,18 @@ function login(){
      </label>
     
   </fieldset>
+
+  </div>
+  <div class="modal-footer">
+  	<button class="btn btn-primary loginuser" type="Submit">Log In</button>
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    
+  </div>
+</div>
 </form>
    
     
-  </div>
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    <button class="btn btn-primary loginuser">Log In</button>
-  </div>
-</div>
+  
 
 	<?
 	}
@@ -133,6 +135,8 @@ function login(){
 
 		mysql_query("UPDATE permission_table SET StatusID='$IDnum' WHERE UserName = '$user'");
 	}
+
+	
 
 
 ?>

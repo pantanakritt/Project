@@ -72,6 +72,35 @@ $(document).ready(function(){
 			});
 		};
 
+		var function_add_user = function(type){
+			$.ajax({
+				url : "function/AjaxUpdate.php",
+				data : {
+					
+					"add_user" : type
+				},
+				type : "POST",
+				success : function(data){
+					$(".updates").html(data);
+				}
+			});
+		};
+
+		var function_add_userform = function(type,data_form){
+			$.ajax({
+				url : "function/AjaxUpdate.php",
+				data : {
+					
+					"add_user" : type,
+					"data_user" : data_form
+				},
+				type : "POST",
+				success : function(data){
+					$(".updates").html(data);
+				}
+			});
+		};
+
 
 		
 		$(".search_from_day").click(function(event){
@@ -126,4 +155,45 @@ $(document).ready(function(){
 			function_status_ID("ActivateID",stsid,stnid);
 			
 		});
+
+		$(".add_user").click(function(event){
+			event.preventDefault();
+			function_add_user("add_user");
+			
+		});
+
+		$(".confirmPWD").change(function(event){
+			event.preventDefault();
+			var pwd1 = $('.add_userPWD').val();
+			var pwd2 = $('.confirmPWD').val();
+			if (pwd1=pwd2){
+
+					document.getElementsByClassName('control-group').setAttribute("control-group", "control-group success");
+					document.getElementsById('pwd_error').value='';
+					alert("Hello 1");
+
+			}
+			else {
+
+					document.getElementsByClassName('control-group').setAttribute("control-group", "control-group error");
+					document.getElementsById('pwd_error').value='พาสเวิร์ดไม่ตรงกันกรุณาตรวจสอบ';
+					alert("Hello 2");
+
+
+			}
+		});
+
+		$(".add_userbtn").click(function(event){
+			event.preventDefault();
+			var form_data1 = $('.add_userID').val()+","+$('.add_userPWD').val()+","+$('.add_userFSTN').val()+","+$('.add_userLSTN').val()+","+$("input[name='optionsRadios']:checked").val();
+			var form_data2 = $('.adduser_email').val()+","+$('.adduser_phone').val()+","+$("input[name='permiss1']:checked").val()+","+$("input[name='active1']:checked").val();
+
+			var form_send = form_data1+","+form_data2;
+
+			//alert(form_send);
+			function_add_userform("form_adduser",form_send);
+		});
+
+		
 	});
+

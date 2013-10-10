@@ -59,5 +59,23 @@ else if ($_POST['type_view']== "ActivateID"){
 	dis_or_activate_user($_POST[userSTSid],$_POST[StatID]);
 	//echo "<br><br> username is = ".$_POST[userSTSid]." status id = ".$_POST[StatID];
 	user_status();
-}
+	}
+
+else if ($_POST['add_user']=="add_user"){
+
+	add_user();
+	}
+
+else if ($_POST['add_user']=="form_adduser"){
+
+	$form_data = $_POST['data_user'];
+	$data_spilt = explode(',', $form_data);
+
+	//echo "<br><br>";
+	//print_r($data_spilt);
+
+	add_user_to_DB($data_spilt);
+
+
+	}
 ?>
