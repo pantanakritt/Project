@@ -9,8 +9,8 @@ function user_status (){
 
 		echo "<tr bgcolor='#9C9C9C'>";
 			
-			echo "<th colspan='2'><center>Username</center></th>";
-			echo "<th><center>Permission</center></th>";
+			echo "<th colspan='2' width='150'><center>Username</center></th>";
+			echo "<th width='100'><center>Permission</center></th>";
 			echo "<th><center>Firstname</center></th>";
 			echo "<th><center>Lastname</center></th>";
 			echo "<th><center>Gender</center></th>";
@@ -22,13 +22,18 @@ function user_status (){
 				if($data_user[StatusID]){
 					echo "<tr class='success' value>";
 
-					echo "<td><div align='center' class='btn-toolbar'>";
+					echo "<td width='50'><div align='center' class='btn-toolbar'>";
   							echo "<div class='btn-group'>";
     						echo "<a class='btn btn-mini' href='#'>";
     							echo "<input type='hidden' class='statname' value='".$data_user[UserName]."'>";
-    							echo "<input type='hidden' class='statid' value='".$data_user[StatusID]."'>";
-    							echo "<i class='icon-edit'></i></a>";
-    						echo "<a class='btn btn-mini' href='#'><i class='icon-ban-circle'></i></a>";
+    							
+    							echo "<i class='icon-edit'></i>";
+    						echo "</a>";
+    						echo "<a class='btn btn-mini del_userbtn' href='#'>";
+    							echo "<input type='hidden' class='statname' value='".$data_user[UserName]."'>";
+    							
+    							echo "<i class='icon-ban-circle'></i>";
+    						echo "</a>";
   							echo "</div>";
 						echo "</div></td>";
 
@@ -82,9 +87,14 @@ function user_status (){
   							echo "<div class='btn-group'>";
     						echo "<a class='btn btn-mini' href='#'>";
     							echo "<input type='hidden' class='statname' value='".$data_user[UserName]."'>";
-    							echo "<input type='hidden' class='statid' value='".$data_user[StatusID]."'>";
-    							echo "<i class='icon-edit'></i></a>";
-    						echo "<a class='btn btn-mini' href='#'><i class='icon-ban-circle'></i></a>";
+    							
+    							echo "<i class='icon-edit'></i>";
+    						echo "</a>";
+    						echo "<a class='btn btn-mini' href='#'>";
+    							echo "<input type='hidden' class='statname' value='".$data_user[UserName]."'>";
+    							
+    							echo "<i class='icon-ban-circle'></i>";
+    						echo "</a>";
   							echo "</div>";
 						echo "</div></td>";
 
@@ -142,7 +152,7 @@ function user_status (){
 				echo "<input class='input-large add_userID' type='text' placeholder='พิมพ์ Ussername ที่ต้องการ'>";
 				echo "<label>รหัสผ่านของผู้ใช้งาน</label>";
 				echo "<input class='input-large add_userPWD' type='password' placeholder='พิมพ์ Password ที่ต้องการ'>";
-				echo "<div class='control-group info'>";
+				echo "<div class='control-group'>";
 				echo "<div class='controls'>";
 				echo "<label>ยืนยันรหัสผ่าน</label>";
     			echo "<input type='text' class='confirmPWD' id='confirmPWD' placeholder='ยืนยันรหัสผ่าน'>";

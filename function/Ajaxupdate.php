@@ -78,4 +78,11 @@ else if ($_POST['add_user']=="form_adduser"){
 
 
 	}
+
+	else if ($_POST['type_view']=="del_user"){
+
+	delete_user($_POST['del_user']);
+
+
+	}
 ?>

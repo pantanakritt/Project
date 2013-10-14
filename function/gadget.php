@@ -129,6 +129,14 @@ function login(){
 			return FALSE;
 		}
 
+	function chk_admin(){
+		if (($_SESSION['sesid']== session_id()) && isset($_SESSION['username'])    &&   isset($_SESSION['password'] ) && isset($_SESSION['SuperUser'])){
+			return TRUE;
+			}
+			else 
+			return FALSE;
+	}
+
 	function dis_or_activate_user($user,$IDnum){
 		if ($IDnum) $IDnum = FALSE;
 		else $IDnum = TRUE;
@@ -136,6 +144,24 @@ function login(){
 		mysql_query("UPDATE permission_table SET StatusID='$IDnum' WHERE UserName = '$user'");
 	}
 
+	function delete_user($del_user){
+		echo "hi";
+		if(chk_admin()){
+			mysql_query("DELETE * FROM permission_table WHERE UserName = '$del_user'");
+			user_status();
+		}
+		else{
+			require_once("user.php");
+			?>
+				<script>
+				alert("คุณไม่มีสิทธิ์ในการแก้ไขข้อมูล กรุณาติดต่อผู้ดูแลระบบ !!!");
+				</script>
+			<?
+			user_status();
+
+		}
+
+	}
 	
 
 

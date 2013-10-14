@@ -101,6 +101,21 @@ $(document).ready(function(){
 			});
 		};
 
+		var function_delete_user = function(type,del_user){
+			$.ajax({
+				url : "function/AjaxUpdate.php",
+				data : {
+					
+					"type_view" : type,
+					"del_user" : del_user
+				},
+				type : "POST",
+				success : function(data){
+					$(".updates").html(data);
+				}
+			});
+		};
+
 
 		
 		$(".search_from_day").click(function(event){
@@ -162,24 +177,21 @@ $(document).ready(function(){
 			
 		});
 
-		$(".confirmPWD").change(function(event){
-			event.preventDefault();
+		$(".confirmPWD").change(function(){
+
 			var pwd1 = $('.add_userPWD').val();
 			var pwd2 = $('.confirmPWD').val();
-			if (pwd1=pwd2){
 
-					document.getElementsByClassName('control-group').setAttribute("control-group", "control-group success");
-					document.getElementsById('pwd_error').value='';
-					alert("Hello 1");
+			if (pwd1==pwd2){
+
+					$(this).parents('.control-group').addClass("success");
+					$('#pwd_error').html("");
 
 			}
 			else {
-
-					document.getElementsByClassName('control-group').setAttribute("control-group", "control-group error");
-					document.getElementsById('pwd_error').value='พาสเวิร์ดไม่ตรงกันกรุณาตรวจสอบ';
-					alert("Hello 2");
-
-
+					$(this).parents('.control-group').removeClass("success");
+					$(this).parents('.control-group').addClass("error");
+					$('#pwd_error').html("error");
 			}
 		});
 
@@ -192,6 +204,21 @@ $(document).ready(function(){
 
 			//alert(form_send);
 			function_add_userform("form_adduser",form_send);
+		});
+
+		$(".del_userbtn").click(function(event){
+			event.preventDefault();
+			var del_user = $(this).children(".statname").val();
+			if(confirm('คุณต้องการลบผู้ใช้ '+del_user)==true){
+			
+			alert("if");;
+			function_delete_user("del_user",del_user);
+		}
+		else {
+			alert("else");
+			function_status_user("status_users");
+		}
+
 		});
 
 		
