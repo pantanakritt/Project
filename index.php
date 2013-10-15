@@ -183,7 +183,7 @@ login();
               <a tabindex="-1" href="#">ส่วนจัดการสำหรับผู้ดูแลระบบ</a>
                 <ul class="dropdown-menu">
                   <li><a tabindex="-1" class='add_user' href="#">เพิ่มผู้ใช้งาน</a></li>
-                  <li><a tabindex="-1" href="#">แก้ไขผู้ใช้งาน</a></li>
+                  <li><a tabindex="-1" class='edit_prolink' href="#">แก้ไขผู้ใช้งาน</a></li>
                   <li ><a tabindex="-1" class='status_user' href="#">สถานะผู้ใช้งาน</a></li>
                 </ul>
            

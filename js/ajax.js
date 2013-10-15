@@ -116,6 +116,42 @@ $(document).ready(function(){
 			});
 		};
 
+		var function_chk_usr = function(type,usr1){
+			$.ajax({
+				url : "function/AjaxUpdate.php",
+				data : {
+					
+					"type_view" : type,
+					"usrn" : usr1
+				},
+				type : "POST",
+				success : function(data){
+					
+						$("#user_error").html(data);
+						
+					
+				}
+			});
+		};
+
+		var function_edit_profile = function(type,usr1){
+			$.ajax({
+				url : "function/AjaxUpdate.php",
+				data : {
+					
+					"type_view" : type
+					
+				},
+				type : "POST",
+				success : function(data){
+					
+						$(".updates").html(data);
+						
+					
+				}
+			});
+		};
+
 
 		
 		$(".search_from_day").click(function(event){
@@ -191,8 +227,14 @@ $(document).ready(function(){
 			else {
 					$(this).parents('.control-group').removeClass("success");
 					$(this).parents('.control-group').addClass("error");
-					$('#pwd_error').html("error");
+					$('#pwd_error').html("รหัสผ่านไม่ตรงกันกรุณาตรวจสอบ");
 			}
+		});
+
+		$(".add_userID").change(function(){
+
+			var usr1 = $('.add_userID').val();
+			function_chk_usr("chk_usr",usr1);
 		});
 
 		$(".add_userbtn").click(function(event){
@@ -210,16 +252,19 @@ $(document).ready(function(){
 			event.preventDefault();
 			var del_user = $(this).children(".statname").val();
 			if(confirm('คุณต้องการลบผู้ใช้ '+del_user)==true){
-			
-			alert("if");;
 			function_delete_user("del_user",del_user);
 		}
 		else {
-			alert("else");
 			function_status_user("status_users");
 		}
 
 		});
+
+		$(".edit_prolink").click(function(event){
+			event.preventDefault();
+			function_edit_profile("edit_profile");
+		});
+
 
 		
 	});

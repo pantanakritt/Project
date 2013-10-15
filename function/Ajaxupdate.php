@@ -85,4 +85,35 @@ else if ($_POST['add_user']=="form_adduser"){
 
 
 	}
+
+	else if($_POST['type_view']=="chk_usr"){
+
+		$usrn = $_POST['usrn'];
+		$uque = mysql_query("SELECT * FROM `permission_table` WHERE `UserName` = '$usrn'");
+		$rowque = mysql_num_rows($uque);
+		if ($rowque!=0){
+			?>
+			<script>
+			$(".addusername").removeClass("success");
+			$(".addusername").addClass("error");
+			</script>
+			<?
+			echo "ชื่อผู้ใช้งานถูกใช้งานแล้ว";
+		}
+		else {
+			?>
+			<script>
+			$(".addusername").removeClass("error");
+			$(".addusername").addClass("success");
+			</script>
+			<?
+			$usrval = 0;
+			echo "";
+		}
+
+	}
+
+else if ($_POST['type_view']=="edit_profile"){
+	edit_profile();	
+}
 ?>

@@ -145,13 +145,13 @@ function login(){
 	}
 
 	function delete_user($del_user){
-		echo "hi";
+		require_once("user.php");
 		if(chk_admin()){
-			mysql_query("DELETE * FROM permission_table WHERE UserName = '$del_user'");
+			mysql_query("DELETE FROM permission_table WHERE UserName = '$del_user'");
 			user_status();
 		}
 		else{
-			require_once("user.php");
+			
 			?>
 				<script>
 				alert("คุณไม่มีสิทธิ์ในการแก้ไขข้อมูล กรุณาติดต่อผู้ดูแลระบบ !!!");
@@ -163,6 +163,6 @@ function login(){
 
 	}
 	
-
+	
 
 ?>

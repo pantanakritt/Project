@@ -22,7 +22,8 @@ function user_status (){
 				if($data_user[StatusID]){
 					echo "<tr class='success' value>";
 
-					echo "<td width='50'><div align='center' class='btn-toolbar'>";
+					echo "<td width='50'>";
+					echo "<div align='center' class='btn-toolbar'>";
   							echo "<div class='btn-group'>";
     						echo "<a class='btn btn-mini' href='#'>";
     							echo "<input type='hidden' class='statname' value='".$data_user[UserName]."'>";
@@ -35,7 +36,8 @@ function user_status (){
     							echo "<i class='icon-ban-circle'></i>";
     						echo "</a>";
   							echo "</div>";
-						echo "</div></td>";
+						echo "</div>";
+						echo "</td>";
 
 					echo "<td><center>".$data_user[UserName]."</center></td>";
 
@@ -149,13 +151,19 @@ function user_status (){
 
 				echo "<fieldset>";
 				echo "<label>ชื่อผู้ใช้งาน</label>";
-				echo "<input class='input-large add_userID' type='text' placeholder='พิมพ์ Ussername ที่ต้องการ'>";
+					echo "<div class='control-group addusername'>";
+					echo "<div class='controls'>";
+					echo "<input class='input-large add_userID' type='text' placeholder='พิมพ์ Ussername ที่ต้องการ'>";
+					echo "<span class='help-inline' id='user_error'></span>";
+					echo "</div>";
+	  				echo "</div>";
 				echo "<label>รหัสผ่านของผู้ใช้งาน</label>";
-				echo "<input class='input-large add_userPWD' type='password' placeholder='พิมพ์ Password ที่ต้องการ'>";
+				
 				echo "<div class='control-group'>";
 				echo "<div class='controls'>";
+				echo "<input class='input-large add_userPWD' type='password' placeholder='พิมพ์ Password ที่ต้องการ'>";
 				echo "<label>ยืนยันรหัสผ่าน</label>";
-    			echo "<input type='text' class='confirmPWD' id='confirmPWD' placeholder='ยืนยันรหัสผ่าน'>";
+    			echo "<input type='password' class='confirmPWD' id='confirmPWD' placeholder='ยืนยันรหัสผ่าน'>";
     			echo "<span class='help-inline' id='pwd_error'></span>";
   				echo "</div>";
   				echo "</div>";
@@ -282,6 +290,11 @@ function user_status (){
 		}
 		
 
+	}
+
+	function edit_profile(){
+
+		echo "<br><br> This is function Edit profile";
 	}
 
 ?>
