@@ -48,17 +48,19 @@ else if ($_POST['type_view'] == "check_login"){
 
 else if ($_POST['type_view'] == "check_logout"){
 	session_destroy();
-	echo "<script>window.location.href='index.php'</script>";
+	echo "<script>";
+	//echo "alert('');";
+	echo "window.location.href='index.php'</script>";
 	
 	}
 
 	else if ($_POST['type_view'] == "status_users"){
-			user_status();
+			user_status("");
 	}
 else if ($_POST['type_view']== "ActivateID"){
 	dis_or_activate_user($_POST[userSTSid],$_POST[StatID]);
 	//echo "<br><br> username is = ".$_POST[userSTSid]." status id = ".$_POST[StatID];
-	user_status();
+	user_status('');
 	}
 
 else if ($_POST['add_user']=="add_user"){
@@ -113,7 +115,34 @@ else if ($_POST['add_user']=="form_adduser"){
 
 	}
 
-else if ($_POST['type_view']=="edit_profile"){
-	edit_profile();	
+else if ($_POST['type_view']=="search_ulink"){
+	search_user();
+}
+
+else if ($_POST['type_view']=="search_user1"){
+
+	$data_spilt = explode(',', $_POST['search_data']);	
+	$expres2find = "WHERE UserName LIKE '".$data_spilt[0]."%' AND UserFirstname LIKE '".$data_spilt[1]."%' AND UserLastname LIKE '";
+	$expres2find .= $data_spilt[2]."%' AND Email LIKE '".$data_spilt[3]."%' AND Telephone LIKE '".$data_spilt[4]."%'";
+	search_user();
+	user_status($expres2find);
+}
+
+else if ($_POST['type_view']=="edit_user"){
+	user_edit($_POST['edit_id']);
+}
+
+else if ($_POST['type_view']=="update_user"){
+
+$form_data = $_POST['usr_data'];
+	$data_spilt = explode(',', $form_data);
+
+	//echo "<br><br>";
+	//print_r($data_spilt);
+
+	update_user_to_DB($data_spilt);
+	
+
+
 }
 ?>

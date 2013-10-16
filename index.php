@@ -183,14 +183,14 @@ login();
               <a tabindex="-1" href="#">ส่วนจัดการสำหรับผู้ดูแลระบบ</a>
                 <ul class="dropdown-menu">
                   <li><a tabindex="-1" class='add_user' href="#">เพิ่มผู้ใช้งาน</a></li>
-                  <li><a tabindex="-1" class='edit_prolink' href="#">แก้ไขผู้ใช้งาน</a></li>
+                  <li><a tabindex="-1" class='search_ulink' href="#">ค้นหาผู้ใช้งาน</a></li>
                   <li ><a tabindex="-1" class='status_user' href="#">สถานะผู้ใช้งาน</a></li>
                 </ul>
            
            </li>
            <? } ?>
            <li>
-           		<a tabindex="-1" href="#">แก้ไขข้อมูลส่วนตัว</a>
+           		<a tabindex="-1" class = 'edit_profile' href="#">แก้ไขข้อมูลส่วนตัว<input type='hidden' class='statname' value='<?=$_SESSION['username']?>'></a>
            
            </li>
           

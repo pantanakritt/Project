@@ -134,12 +134,69 @@ $(document).ready(function(){
 			});
 		};
 
-		var function_edit_profile = function(type,usr1){
+		var function_search_ulink = function(type){
 			$.ajax({
 				url : "function/AjaxUpdate.php",
 				data : {
 					
 					"type_view" : type
+					
+				},
+				type : "POST",
+				success : function(data){
+					
+						$(".updates").html(data);
+						
+					
+				}
+			});
+		};
+
+		var function_search_user1 = function(type,s_data1){
+			$.ajax({
+				url : "function/AjaxUpdate.php",
+				data : {
+					
+					"type_view" : type,
+					"search_data" : s_data1
+					
+				},
+				type : "POST",
+				success : function(data){
+					
+						$(".updates").html(data);
+						
+					
+				}
+			});
+		};
+
+		var function_user_edit = function(type,edit_id){
+			$.ajax({
+				url : "function/AjaxUpdate.php",
+				data : {
+					
+					"type_view" : type,
+					"edit_id" : edit_id
+					
+				},
+				type : "POST",
+				success : function(data){
+					
+						$(".updates").html(data);
+						
+					
+				}
+			});
+		};
+
+		var function_update_user = function(type,user_data){
+			$.ajax({
+				url : "function/AjaxUpdate.php",
+				data : {
+					
+					"type_view" : type,
+					"usr_data" : user_data
 					
 				},
 				type : "POST",
@@ -219,7 +276,7 @@ $(document).ready(function(){
 			var pwd2 = $('.confirmPWD').val();
 
 			if (pwd1==pwd2){
-
+					$(this).parents('.control-group').addClass("error");
 					$(this).parents('.control-group').addClass("success");
 					$('#pwd_error').html("");
 
@@ -248,6 +305,19 @@ $(document).ready(function(){
 			function_add_userform("form_adduser",form_send);
 		});
 
+
+		$(".update_userbtn").click(function(event){
+			event.preventDefault();
+
+			var usrupdate_data = $('.add_userID').val()+","+$('.add_userPWD').val()+","+$('.add_userFSTN').val()+","+$('.add_userLSTN').val()+","+$("input[name='optionsRadios']:checked").val();
+			var usrupdate_data2 = $('.adduser_email').val()+","+$('.adduser_phone').val()+","+$("input[name='permiss1']:checked").val()+","+$("input[name='active1']:checked").val();
+
+			var usrdata_send = usrupdate_data+","+usrupdate_data2;
+
+			//alert(form_send);
+			function_update_user("update_user",usrdata_send);
+		});
+
 		$(".del_userbtn").click(function(event){
 			event.preventDefault();
 			var del_user = $(this).children(".statname").val();
@@ -260,12 +330,34 @@ $(document).ready(function(){
 
 		});
 
-		$(".edit_prolink").click(function(event){
+		$(".search_ulink").click(function(event){
 			event.preventDefault();
-			function_edit_profile("edit_profile");
+			function_search_ulink("search_ulink");
 		});
 
+		$(".s_btn").click(function(event){
+			event.preventDefault();
+			
+			var s_data = $('#s_user').val()+","+$('#s_name').val()+","+$('#s_lname').val()+","+$('#s_email').val()+","+$('#s_tel').val();
+			function_search_user1("search_user1",s_data)
+		});
 
+		$(".edit_userbtn").click(function(event){
+			event.preventDefault();
+			var edit_user = $(this).children(".statname").val();
+			function_user_edit("edit_user",edit_user);
+
+
+		});
+
+		$(".edit_profile").click(function(event){
+			event.preventDefault();
+			var edit_user = $(this).children(".statname").val();
+			function_user_edit("edit_user",edit_user);
+
+
+		});
 		
+
 	});
 
