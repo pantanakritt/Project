@@ -129,7 +129,7 @@ else if ($_POST['type_view']=="search_user1"){
 }
 
 else if ($_POST['type_view']=="edit_user"){
-	user_edit($_POST['edit_id']);
+	user_edit($_POST['edit_id'],$_POST['header_chk']);
 }
 
 else if ($_POST['type_view']=="update_user"){

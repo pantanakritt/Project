@@ -171,13 +171,14 @@ $(document).ready(function(){
 			});
 		};
 
-		var function_user_edit = function(type,edit_id){
+		var function_user_edit = function(type,edit_id,hchk){
 			$.ajax({
 				url : "function/AjaxUpdate.php",
 				data : {
 					
 					"type_view" : type,
-					"edit_id" : edit_id
+					"edit_id" : edit_id,
+					"header_chk" : hchk
 					
 				},
 				type : "POST",
@@ -353,7 +354,7 @@ $(document).ready(function(){
 		$(".edit_profile").click(function(event){
 			event.preventDefault();
 			var edit_user = $(this).children(".statname").val();
-			function_user_edit("edit_user",edit_user);
+			function_user_edit("edit_user",edit_user,"edit_profile");
 
 
 		});

@@ -6,7 +6,8 @@ function user_status ($expression_us){
 	?>
 	<script src="js/ajax.js"> </script>
 	<?
-		echo "<br><br><br>";
+		echo "<br><br>";
+		echo "<div style='font-size: 250%' align='center'>สถานะผู้ใช้งาน</div><br>";
 		echo "<table class='table table-bordered' >";
 
 		echo "<tr bgcolor='#9C9C9C'>";
@@ -146,9 +147,12 @@ function user_status ($expression_us){
 		function add_user(){
 	?>
 	<script src="js/ajax.js"> </script>
+	
 	<?
 		echo "<br><br>";
+		
 		echo "<div class='mini-layout'>";
+			echo "<div style='font-size: 250%' align='center'>เพิ่มข้อมูลผู้ใช้งาน</div>";
 			echo "<div class='mini-layout-body'>";
 
 				echo "<fieldset>";
@@ -313,7 +317,7 @@ function user_status ($expression_us){
 		</form>
 		<?
 	}
-	function user_edit($edit_uid){
+	function user_edit($edit_uid,$hchk){
 		?>
 		<script src="js/ajax.js"> </script>
 		<?
@@ -324,6 +328,8 @@ function user_status ($expression_us){
 		echo "<br><br>";
 
 		//print_r($query_fetch_edid);
+		if($hchk=="edit_profile") echo "<div style='font-size: 250%' align='center'>แก้ไขข้อมูลส่วนตัว</div>";
+		else echo "<div style='font-size: 250%' align='center'>แก้ไขข้อมูลผู้ใช้งาน</div>";
 		echo "<div class='mini-layout'>";
 			echo "<div class='mini-layout-body'>";
 
