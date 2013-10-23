@@ -8,16 +8,25 @@ function user_status ($expression_us){
 	<?
 		echo "<br><br>";
 		echo "<div style='font-size: 250%' align='center'>สถานะผู้ใช้งาน</div><br>";
+		echo "<div>";
+		echo "<img src='img/per_admin.png' width='16' height='16'> = สิทธิ์สำหรับผู้ดูแลระบบ<br>";
+		echo "<img src='img/per_insert.png' width='16' height='16'> = สิทธิ์สำหรับการเพิ่มข้อมูล<br>";
+		echo "<img src='img/per_update.png' width='16' height='16'> = สิทธิ์สำหรับการแก้ไขข้อมูล<br>";
+		echo "<img src='img/per_delete.png' width='16' height='16'> = สิทธิ์สำหรับการลบข้อมูล<br>";
+		echo "<br>";
+
 		echo "<table class='table table-bordered' >";
 
 		echo "<tr bgcolor='#9C9C9C'>";
 			
-			echo "<th colspan='2' width='150'><center>Username</center></th>";
-			echo "<th width='100'><center>Permission</center></th>";
-			echo "<th><center>Firstname</center></th>";
-			echo "<th><center>Lastname</center></th>";
-			echo "<th><center>Gender</center></th>";
-			echo "<th width='200'><center>Status</center></th>";
+			echo "<th width='150'><center>ชื่อผู้ใช้</center></th>";
+			echo "<th width='100'><center>สิทธ์การใช้งาน</center></th>";
+			echo "<th><center>ชื่อ</center></th>";
+			echo "<th><center>นามสกุล</center></th>";
+			echo "<th><center>เพศ</center></th>";
+			echo "<th width='110'><center>สถานะการใช้งาน</center></th>";
+			echo "<th width='70'><center>แก้ไขผู้ใช้</center></th>";
+
 		echo "</tr>";
 	
 		$query_user = mysql_query("SELECT * FROM permission_table $expression_us ORDER BY StatusID,UserName ASC");
@@ -25,22 +34,7 @@ function user_status ($expression_us){
 				if($data_user[StatusID]){
 					echo "<tr class='success' value>";
 
-					echo "<td width='50'>";
-					echo "<div align='center' class='btn-toolbar'>";
-  							echo "<div class='btn-group'>";
-    						echo "<a class='btn btn-mini edit_userbtn' href='#'>";
-    							echo "<input type='hidden' class='statname' value='".$data_user[UserName]."'>";
-    							
-    							echo "<i class='icon-edit'></i>";
-    						echo "</a>";
-    						echo "<a class='btn btn-mini del_userbtn' href='#'>";
-    							echo "<input type='hidden' class='statname' value='".$data_user[UserName]."'>";
-    							
-    							echo "<i class='icon-ban-circle'></i>";
-    						echo "</a>";
-  							echo "</div>";
-						echo "</div>";
-						echo "</td>";
+					
 
 					echo "<td><center>".$data_user[UserName]."</center></td>";
 
@@ -76,19 +70,16 @@ function user_status ($expression_us){
 
 					echo "<td>";
 					echo "<div align='center'>";
-					echo "<font color='green'>Activated</font>";
-					echo "&nbsp;&nbsp;&nbsp;<button class='btn btn-mini activateID' type='button'>";
+					echo "<a href='#' class='activateID'><img src='img/disac2.gif' height='80%' width='80%'>";
 						echo "<input type='hidden' class='statname' value='".$data_user[UserName]."'>";
 						echo "<input type='hidden' class='statid' value='".$data_user[StatusID]."'>";
-					echo "Clik to disactivate</button>";
+					echo "</a>";
 					
 					echo "</div>"; 
-					echo "</td></tr>";
-				}
-				else {
-					echo "<tr class='error'>";
+					echo "</td>";
 
-						echo "<td><div align='center' class='btn-toolbar'>";
+					echo "<td width='50'>";
+					echo "<div align='center' class='btn-toolbar'>";
   							echo "<div class='btn-group'>";
     						echo "<a class='btn btn-mini edit_userbtn' href='#'>";
     							echo "<input type='hidden' class='statname' value='".$data_user[UserName]."'>";
@@ -101,7 +92,15 @@ function user_status ($expression_us){
     							echo "<i class='icon-ban-circle'></i>";
     						echo "</a>";
   							echo "</div>";
-						echo "</div></td>";
+						echo "</div>";
+						echo "</td>";
+
+					echo "</tr>";
+				}
+				else {
+					echo "<tr class='error'>";
+
+						
 
 					echo "<td><center>".$data_user[UserName]."</center></td>";
 					echo "<td>";
@@ -127,15 +126,33 @@ function user_status ($expression_us){
 					echo "</td>";
 					echo "<td><center>".$data_user[UserFirstname]."</center></td><td><center>".$data_user[UserLastname]."</center></td><td>";
 						if($data_user[Gender]){echo "<center>Male</center>";}else {echo "<center>Female</center>";}
-						echo "</td><td>";
-						echo "<div align='center'><font color='red'>Not Activated</font>";
-						echo "&nbsp;&nbsp;&nbsp;<button class='btn btn-mini activateID' type='button'>";
+						echo "</td><td><div align='center'>";
+						echo "<a href='#' class='activateID'><img src='img/activ.gif' height='80%' width='80%'>";
 						echo "<input type='hidden' class='statname' value='".$data_user[UserName]."'>";
 						echo "<input type='hidden' class='statid' value='".$data_user[StatusID]."'>";
-					echo "Clik to activate</button>";
+					echo "</a>";
 					
 					echo "</div>";
-					echo "</td></tr>";
+					echo "</td>";
+
+					echo "<td width='50'>";
+					echo "<div align='center' class='btn-toolbar'>";
+  							echo "<div class='btn-group'>";
+    						echo "<a class='btn btn-mini edit_userbtn' href='#'>";
+    							echo "<input type='hidden' class='statname' value='".$data_user[UserName]."'>";
+    							
+    							echo "<i class='icon-edit'></i>";
+    						echo "</a>";
+    						echo "<a class='btn btn-mini del_userbtn' href='#'>";
+    							echo "<input type='hidden' class='statname' value='".$data_user[UserName]."'>";
+    							
+    							echo "<i class='icon-ban-circle'></i>";
+    						echo "</a>";
+  							echo "</div>";
+						echo "</div>";
+						echo "</td>";
+
+					echo "</tr>";
 				}
 
 			}

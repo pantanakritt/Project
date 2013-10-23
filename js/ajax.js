@@ -1,217 +1,18 @@
 $(document).ready(function(){
-		var function_search_class = function(type,data_send){
-			$.ajax({
-				url : "function/AjaxUpdate.php",
-				data : {
-					"data_send" : data_send,
-					"type_view" : type
-				},
-				type : "POST",
-				success : function(data){
-					$(".updates").html(data);
-				}
-			});
-		};
 		
-		var function_login = function(type,user,password){
+		var ajax_common = function(data,url,type,obj){
 			$.ajax({
-				url : "function/AjaxUpdate.php",
-				data : {
-					"user" : user,
-					"password"  : password,
-					"type_view" : type
-				},
-				type : "POST",
-				success : function(data){
-					$(".updatelogin").html(data);
-				}
-			});
-		};
-		
-		var function_logout = function(type){
-			$.ajax({
-				url : "function/AjaxUpdate.php",
-				data : {
-					
-					"type_view" : type
-				},
-				type : "POST",
-				success : function(data){
-					$(".updates").html(data);
+				url : url,
+				data : data,
+				type : type,
+				success : function(response){
+					$(obj).html(response);
 				}
 			});
 		};
 
-		var function_status_user = function(type){
-			$.ajax({
-				url : "function/AjaxUpdate.php",
-				data : {
-					
-					"type_view" : type
-				},
-				type : "POST",
-				success : function(data){
-					$(".updates").html(data);
-				}
-			});
-		};
+		//----------------------------------- Search class ----------------------
 
-		var function_status_ID = function(type,stsid,stnid){
-			$.ajax({
-				url : "function/AjaxUpdate.php",
-				data : {
-					
-					"type_view" : type,
-					"userSTSid" : stnid,
-					"StatID" : stsid
-				},
-				type : "POST",
-				success : function(data){
-					$(".updates").html(data);
-				}
-			});
-		};
-
-		var function_add_user = function(type){
-			$.ajax({
-				url : "function/AjaxUpdate.php",
-				data : {
-					
-					"add_user" : type
-				},
-				type : "POST",
-				success : function(data){
-					$(".updates").html(data);
-				}
-			});
-		};
-
-		var function_add_userform = function(type,data_form){
-			$.ajax({
-				url : "function/AjaxUpdate.php",
-				data : {
-					
-					"add_user" : type,
-					"data_user" : data_form
-				},
-				type : "POST",
-				success : function(data){
-					$(".updates").html(data);
-				}
-			});
-		};
-
-		var function_delete_user = function(type,del_user){
-			$.ajax({
-				url : "function/AjaxUpdate.php",
-				data : {
-					
-					"type_view" : type,
-					"del_user" : del_user
-				},
-				type : "POST",
-				success : function(data){
-					$(".updates").html(data);
-				}
-			});
-		};
-
-		var function_chk_usr = function(type,usr1){
-			$.ajax({
-				url : "function/AjaxUpdate.php",
-				data : {
-					
-					"type_view" : type,
-					"usrn" : usr1
-				},
-				type : "POST",
-				success : function(data){
-					
-						$("#user_error").html(data);
-						
-					
-				}
-			});
-		};
-
-		var function_search_ulink = function(type){
-			$.ajax({
-				url : "function/AjaxUpdate.php",
-				data : {
-					
-					"type_view" : type
-					
-				},
-				type : "POST",
-				success : function(data){
-					
-						$(".updates").html(data);
-						
-					
-				}
-			});
-		};
-
-		var function_search_user1 = function(type,s_data1){
-			$.ajax({
-				url : "function/AjaxUpdate.php",
-				data : {
-					
-					"type_view" : type,
-					"search_data" : s_data1
-					
-				},
-				type : "POST",
-				success : function(data){
-					
-						$(".updates").html(data);
-						
-					
-				}
-			});
-		};
-
-		var function_user_edit = function(type,edit_id,hchk){
-			$.ajax({
-				url : "function/AjaxUpdate.php",
-				data : {
-					
-					"type_view" : type,
-					"edit_id" : edit_id,
-					"header_chk" : hchk
-					
-				},
-				type : "POST",
-				success : function(data){
-					
-						$(".updates").html(data);
-						
-					
-				}
-			});
-		};
-
-		var function_update_user = function(type,user_data){
-			$.ajax({
-				url : "function/AjaxUpdate.php",
-				data : {
-					
-					"type_view" : type,
-					"usr_data" : user_data
-					
-				},
-				type : "POST",
-				success : function(data){
-					
-						$(".updates").html(data);
-						
-					
-				}
-			});
-		};
-
-
-		
 		$(".search_from_day").click(function(event){
 			event.preventDefault();
 			var dayID = $(this).children(".dayID").val();
@@ -235,6 +36,12 @@ $(document).ready(function(){
 			var groupID = $(this).children(".groupID").val();
 			function_search_class("from_group",groupID);
 		});
+
+		var function_search_class = function(type,data_send){
+			var data = {"data_send" : data_send,"type_view" : type};
+			ajax_common(data,"function/AjaxUpdate.php","POST",$(".updates"));
+		};
+		//------------------ Login -----------------------------------------
 		$(".loginuser").click(function(event){
 			event.preventDefault();
 			var user = $('#userlogin').val();
@@ -242,18 +49,38 @@ $(document).ready(function(){
 			function_login("check_login",user,password);
 			
 		});
+
+		var function_login = function(type,user,password){
+			var data = {"user" : user,"password" : password,"type_view" : type};
+			ajax_common(data,"function/AjaxUpdate.php","POST",$(".updatelogin"));
+		};
 		
+		//--------------------------- Log Out -------------------------------
 		$(".logout").click(function(event){
 			event.preventDefault();
 			function_logout("check_logout");
 			
 		});
 
+		var function_logout = function(type){
+			var data = {"type_view" : type};
+			ajax_common(data,"function/AjaxUpdate.php","POST",$(".updates"));
+		};
+
+		//------------------------ Status User ------------------------------
+
 		$(".status_user").click(function(event){
 			event.preventDefault();
 			function_status_user("status_users");
 			
 		});
+
+		var function_status_user = function(type){
+			var data = {"type_view" : type};
+			ajax_common(data,"function/AjaxUpdate.php","POST",$(".updates"));
+		};
+
+		//----------------------Status ID ----------------------------------
 
 		$(".activateID").click(function(event){
 			event.preventDefault();
@@ -265,11 +92,25 @@ $(document).ready(function(){
 			
 		});
 
+		var function_status_ID = function(type,stsid,stnid){
+			var data = {"type_view" : type,"userSTSid" : stnid,	"StatID" : stsid};
+			ajax_common(data,"function/AjaxUpdate.php","POST",$(".updates"));
+		};
+
+		//------------------------ Add User --------------------------------
+
 		$(".add_user").click(function(event){
 			event.preventDefault();
 			function_add_user("add_user");
 			
 		});
+
+		var function_add_user = function(type){
+			var data = {"add_user" : type};
+			ajax_common(data,"function/AjaxUpdate.php","POST",$(".updates"));
+		};
+
+		//-------------------------- User form ------------------------------
 
 		$(".confirmPWD").change(function(){
 
@@ -306,18 +147,17 @@ $(document).ready(function(){
 			function_add_userform("form_adduser",form_send);
 		});
 
+		var function_add_userform = function(type,data_form){
+			var data = {"add_user" : type, "data_user" : data_form};
+			ajax_common(data,"function/AjaxUpdate.php","POST",$(".updates"));
+		};
 
-		$(".update_userbtn").click(function(event){
-			event.preventDefault();
+		var function_chk_usr = function(type,usr1){
+			var data = {"type_view" : type,	"usrn" : usr1};
+			ajax_common(data,"function/AjaxUpdate.php","POST",$("#user_error"));
+		};
 
-			var usrupdate_data = $('.add_userID').val()+","+$('.add_userPWD').val()+","+$('.add_userFSTN').val()+","+$('.add_userLSTN').val()+","+$("input[name='optionsRadios']:checked").val();
-			var usrupdate_data2 = $('.adduser_email').val()+","+$('.adduser_phone').val()+","+$("input[name='permiss1']:checked").val()+","+$("input[name='active1']:checked").val();
-
-			var usrdata_send = usrupdate_data+","+usrupdate_data2;
-
-			//alert(form_send);
-			function_update_user("update_user",usrdata_send);
-		});
+		//-------------------------- Delete User ------------------------------
 
 		$(".del_userbtn").click(function(event){
 			event.preventDefault();
@@ -331,6 +171,13 @@ $(document).ready(function(){
 
 		});
 
+		var function_delete_user = function(type,del_user){
+			var data = {"type_view" : type,	"del_user" : del_user};
+			ajax_common(data,"function/AjaxUpdate.php","POST",$(".updates"));
+		};
+
+		//---------------------------- search user link ------------------------
+		
 		$(".search_ulink").click(function(event){
 			event.preventDefault();
 			function_search_ulink("search_ulink");
@@ -343,21 +190,67 @@ $(document).ready(function(){
 			function_search_user1("search_user1",s_data)
 		});
 
+		var function_search_ulink = function(type){
+
+			var data = {"type_view" : type};
+			ajax_common(data,"function/AjaxUpdate.php","POST",$(".updates"));
+		};
+
+		var function_search_user1 = function(type,s_data1){
+			var data = {"type_view" : type,	"search_data" : s_data1};
+			ajax_common(data,"function/AjaxUpdate.php","POST",$(".updates"));
+		};
+		//------------------------------- User Edit ---------------------------------
+
 		$(".edit_userbtn").click(function(event){
 			event.preventDefault();
 			var edit_user = $(this).children(".statname").val();
 			function_user_edit("edit_user",edit_user);
-
-
 		});
 
 		$(".edit_profile").click(function(event){
 			event.preventDefault();
 			var edit_user = $(this).children(".statname").val();
 			function_user_edit("edit_user",edit_user,"edit_profile");
-
-
 		});
+
+		var function_user_edit = function(type,edit_id,hchk){
+			var data = {"type_view" : type,	"edit_id" : edit_id, "header_chk" : hchk};
+			ajax_common(data,"function/AjaxUpdate.php","POST",$(".updates"));
+		};
+		//------------------------------ Update User ---------------------------------
+
+		$(".update_userbtn").click(function(event){
+			event.preventDefault();
+
+			var usrupdate_data = $('.add_userID').val()+","+$('.add_userPWD').val()+","+$('.add_userFSTN').val()+","+$('.add_userLSTN').val()+","+$("input[name='optionsRadios']:checked").val();
+			var usrupdate_data2 = $('.adduser_email').val()+","+$('.adduser_phone').val()+","+$("input[name='permiss1']:checked").val()+","+$("input[name='active1']:checked").val();
+
+			var usrdata_send = usrupdate_data+","+usrupdate_data2;
+
+			//alert(form_send);
+			function_update_user("update_user",usrdata_send);
+		});
+
+		var function_update_user = function(type,user_data){
+			var data = {"type_view" : type,	"usr_data" : user_data};
+			ajax_common(data,"function/AjaxUpdate.php","POST",$(".updates"));
+		};
+
+		//------------------------------- Import CSV --------------------------
+
+		$(".csv_link").click(function(event){
+			event.preventDefault();
+			function_csv_form("csv_form");
+		});
+
+		var function_csv_form = function(type){
+			var data = {"type_view" : type};
+			ajax_common(data,"function/schedule.php?func=0","POST",$(".updates"));
+		};
+
+
+		
 		
 
 	});

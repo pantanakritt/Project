@@ -162,7 +162,40 @@ function login(){
 		}
 
 	}
+
+function utf8_fopen_read($fileName) { 
+	    $fc = iconv('windows-874', 'utf-8', file_get_contents($fileName)); 
+	    $handle=fopen("php://memory", "rw"); 
+	    fwrite($handle, $fc); 
+	    fseek($handle, 0); 
+	    return $handle; 
+	} 
+
+function imprt_form(){
+	if (isset($_SESSION['tmpcsvname'])){
+		$file = utf8_fopen_read("CSV/".$_SESSION['tmpcsvname']);
+		while (!feof($file)&&(file_exists("CSV/".$_SESSION['tmpcsvname']))) {
+		print_r(fgetcsv($file));
+		}
+
+		fclose($file);
+
+
+  		unlink("CSV/".$_SESSION['tmpcsvname']);
+  		
+
+		echo "<br><br>";
+		echo "This is import function";
+
+		unset($_SESSION['tmpcsvname']);
+	}
+
+	else {
+		echo "<script src='js/ajax.js'></script>";
+		echo "<br><br>";
+		echo "คุณยังไม่ได้อัพโหลดไฟล์ใด ๆ กรุณา <a href='#' class='csv_link'>อัพโหลด</a>";
+	}
 	
-	
+}
 
 ?>
