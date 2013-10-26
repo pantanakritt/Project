@@ -94,7 +94,7 @@ echo $fetch[0];
 
 }
 
-testlog();
+echo (23/20)+1;
 
 
 

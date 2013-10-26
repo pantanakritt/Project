@@ -145,27 +145,42 @@ $form_data = $_POST['usr_data'];
 }
 
 else if($_POST['type_view'] == "show_log") {
+
+	?>
+	<script src="js/ajax.js"> </script>
+	<?
+
 	$log_query = mysql_query("SELECT * FROM dblog_table ORDER BY log_Date DESC");
 	
 	$log_num = mysql_num_rows($log_query);
 
-	if ($log_num%20){
-		$num_log_page = ($log_num/20)+1;
+	if ($log_num%20!=0){
+		$num_log_page = ceil($log_num/20);
 	}
 	else {
-		$num_log_page = $log_num/20;
+		$num_log_page = floor($log_num/20);
 	}
 
-		echo "<div class='pagination'>";
+		echo "<div class='pagination pagination-centered'>";
 	  	echo "<ul>";
 	    
 	    	for ($x=1;$x<=$num_log_page;$x++){
-	    		echo "<li><a href='#' class='page_dvide active' id='page".$x."'>".$x."</a></li>";
+	    		echo "<li><a href='#' class='page_dvide' id='page".$x."'>".$x."</a></li>";
 			}
 	    
 	    
 	  	echo "</ul>";
 		echo "</div>";
+
+		echo "<ul class='pager'>";
+  		echo "<li class='previous disabled'>";
+    	echo "<a href='#' class='prev_page'><input type='hidden' class='prev_val' value='1'>&larr; Previous</a>";
+  		echo "</li>";
+  		echo "<li><a href='#' class='this_page'>Page 1</a></li>";
+  		echo "<li class='next'>";
+    	echo "<a href='#' class='next_page'><input type='hidden' class='next_val' value='2'><input type='hidden' class='max_page' value='".$num_log_page."'>Next &rarr;</a>";
+  		echo "</li>";
+		echo "</ul>";
 
 		echo "<div class='show_log_page'>";
 		$log_query_lim = mysql_query("SELECT * FROM dblog_table ORDER BY log_Date DESC LIMIT 0,20 ");
@@ -189,6 +204,33 @@ else if($_POST['type_view'] == "show_log") {
 
 		echo "</div>";
 
+
+}
+
+else if($_POST['type_view']=="getpage"){
+
+
+
+	$limitpage = ($_POST['num_lim']-1)*20;
+
+	$log_query_lim = mysql_query("SELECT * FROM dblog_table ORDER BY log_Date DESC LIMIT $limitpage,20 ");
+
+		echo "<table class='table table-bordered'>";
+		echo "<tr><th width='15%'>Time</th><th width='15%'>User</th><th width='55%'>Action</th><th width='15%'>IP Address</th></tr>";
+		$num_lim = mysql_num_rows($log_query_lim);
+		for($y=1;$y<=$num_lim;$y++){
+			$feth_lim = mysql_fetch_array($log_query_lim);
+			echo "<tr>";
+				echo "<td>".$feth_lim[log_Date]."</td>";
+				echo "<td>".$feth_lim[User]."</td>";
+				echo "<td>";
+				echo $feth_lim[Action];
+				echo "</td>";
+				echo "<td>".$feth_lim[ip]."</td>";
+			echo "</tr>";
+
+		}
+		echo "</table>";
 
 }
 	

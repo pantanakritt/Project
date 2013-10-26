@@ -259,6 +259,68 @@ $(document).ready(function(){
 		$(".page_dvide").click(function(event){
 			event.preventDefault();
 			var num_page = $(this).html();
+			var max_p2 = $(".next_page").children(".max_page").val();
+			if(num_page<=1){
+				$(".previous").addClass("disabled");
+			}
+			else {
+				$(".previous").removeClass("disabled");
+			}
+			if(parseInt(num_page)>=parseInt(max_p2)){
+
+				$(".next").addClass("disabled");
+			}
+			else {
+				$(".next").removeClass("disabled");
+			}
+			$(".prev_page").children(".prev_val").attr('value',parseInt(num_page)-1);
+			$(".next_page").children(".next_val").attr('value',parseInt(num_page)+1);
+			$(".this_page").html("Page "+num_page);
+			function_get_pagelog("getpage",num_page);
+		});
+
+		$(".next_page").click(function(event){
+			event.preventDefault();
+			var num_page = $(this).children(".next_val").val();
+			var max_p = $(this).children(".max_page").val();
+			if(num_page==max_p){
+				$(this).parents(".next").addClass("disabled");
+				if(num_page!=1){
+					$(".previous").removeClass("disabled");
+				}
+
+			}
+			else {
+				if(num_page!=1){
+					$(".previous").removeClass("disabled");
+				}
+				$(this).parents(".next").removeClass("disabled");
+			}
+			$(".prev_page").children(".prev_val").attr('value',parseInt(num_page)-1);
+			$(".next_page").children(".next_val").attr('value',parseInt(num_page)+1);
+			$(".this_page").html("Page "+num_page);
+			function_get_pagelog("getpage",num_page);
+		});
+
+		$(".prev_page").click(function(event){
+			event.preventDefault();
+			var num_page = $(this).children(".prev_val").val();
+			var max_p3 = $(this).children(".max_page").val();
+			if(num_page==1){
+				if(num_page!=max_p3){
+					$(".next").removeClass("disabled");
+				}
+				$(this).parents(".previous").addClass("disabled");
+			}
+			else {
+				if(num_page!=max_p3){
+					$(".next").removeClass("disabled");
+				}
+				$(this).parents(".previous").removeClass("disabled");
+			}
+			$(".prev_page").children(".prev_val").attr('value',parseInt(num_page)-1);
+			$(".next_page").children(".next_val").attr('value',parseInt(num_page)+1);
+			$(".this_page").html("Page "+num_page);
 			function_get_pagelog("getpage",num_page);
 		});
 

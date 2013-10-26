@@ -170,12 +170,12 @@ login();
                         <li><a tabindex="-1" href="#">เพิ่มข้อมูลตารางสอน</a></li>
 
                         <? } ?>
-                    <? if($_SESSION['SuperUser']||$_SESSION['Pinsert']) { ?> 
+                    <? if($_SESSION['SuperUser']||$_SESSION['Insert']) { ?> 
                         <li><a tabindex="-1" class="csv_link" href="#">Import ข้อมูลจากไฟล์(csv)</a></li>
                         <? } ?>
-                    <? if($_SESSION['Pupdate']||$_SESSION['SuperUser']) { ?> <li><a tabindex="-1"  href="#">แก้ไขข้อมูลตารางสอน</a></li> 
+                    <? if($_SESSION['Update']||$_SESSION['SuperUser']) { ?> <li><a tabindex="-1"  href="#">แก้ไขข้อมูลตารางสอน</a></li> 
                         <? } ?>
-                    <? if($_SESSION['Pdelete']||$_SESSION['SuperUser']) { ?> <li><a tabindex="-1"  href="#">ลบข้อมูลตารางสอน</a></li>
+                    <? if($_SESSION['Delete']||$_SESSION['SuperUser']) { ?> <li><a tabindex="-1"  href="#">ลบข้อมูลตารางสอน</a></li>
                         <? } ?>
                     </ul>
     	   </li>
