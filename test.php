@@ -1,3 +1,6 @@
+<?
+if($_GET['test']==1){ ?>
+
 <html>
 <head>
 	<meta charset="utf-8">
@@ -52,5 +55,48 @@ $file = utf8_fopen_read("CSV/tempCSV.csv");
 
   unlink("CSV/tempCSV.csv");
   }
+}
 
+else {
+
+  function get_client_ip() {
+     $ipaddress = '';
+     if ($_SERVER['HTTP_CLIENT_IP'])
+         $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
+     else if($_SERVER['HTTP_X_FORWARDED_FOR'])
+         $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+     else if($_SERVER['HTTP_X_FORWARDED'])
+         $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
+     else if($_SERVER['HTTP_FORWARDED_FOR'])
+         $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
+     else if($_SERVER['HTTP_FORWARDED'])
+         $ipaddress = $_SERVER['HTTP_FORWARDED'];
+     else if($_SERVER['REMOTE_ADDR'])
+         $ipaddress = $_SERVER['REMOTE_ADDR'];
+     else
+         $ipaddress = 'UNKNOWN';
+
+     return $ipaddress; 
+}
+
+function testtime(){
+
+  echo date("ymdhis");
+}
+
+function testlog(){
+require_once("function/dbo.php");
+
+$qry = mysql_query("SELECT action FROM dblog_table");
+$fetch = mysql_fetch_array($qry);
+
+echo $fetch[0];
+
+}
+
+testlog();
+
+
+
+}
 ?>

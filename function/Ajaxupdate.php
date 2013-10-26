@@ -20,7 +20,7 @@ else if ($_POST['type_view'] == "check_login"){
 	require_once("gadget.php");
 	
 	if (chk_login($_POST['user'],$_POST['password'])){
-	if ($_SESSION['StatusID']) { ?>
+	if ($_SESSION['StatusID']==1) { ?>
     <script>
     window.location.href="index.php";
     </script>
@@ -47,6 +47,7 @@ else if ($_POST['type_view'] == "check_login"){
 }
 
 else if ($_POST['type_view'] == "check_logout"){
+	update_log("---> Logout",get_client_ip(),$_SESSION['username'],"log_out");
 	session_destroy();
 	echo "<script>";
 	//echo "alert('');";
@@ -55,12 +56,12 @@ else if ($_POST['type_view'] == "check_logout"){
 	}
 
 	else if ($_POST['type_view'] == "status_users"){
-			user_status("");
+			user_status("1");
 	}
 else if ($_POST['type_view']== "ActivateID"){
 	dis_or_activate_user($_POST[userSTSid],$_POST[StatID]);
 	//echo "<br><br> username is = ".$_POST[userSTSid]." status id = ".$_POST[StatID];
-	user_status('');
+	user_status("1");
 	}
 
 else if ($_POST['add_user']=="add_user"){
@@ -141,8 +142,57 @@ $form_data = $_POST['usr_data'];
 	//print_r($data_spilt);
 
 	update_user_to_DB($data_spilt);
+}
+
+else if($_POST['type_view'] == "show_log") {
+	$log_query = mysql_query("SELECT * FROM dblog_table ORDER BY log_Date DESC");
 	
+	$log_num = mysql_num_rows($log_query);
+
+	if ($log_num%20){
+		$num_log_page = ($log_num/20)+1;
+	}
+	else {
+		$num_log_page = $log_num/20;
+	}
+
+		echo "<div class='pagination'>";
+	  	echo "<ul>";
+	    
+	    	for ($x=1;$x<=$num_log_page;$x++){
+	    		echo "<li><a href='#' class='page_dvide active' id='page".$x."'>".$x."</a></li>";
+			}
+	    
+	    
+	  	echo "</ul>";
+		echo "</div>";
+
+		echo "<div class='show_log_page'>";
+		$log_query_lim = mysql_query("SELECT * FROM dblog_table ORDER BY log_Date DESC LIMIT 0,20 ");
+
+		echo "<table class='table table-bordered'>";
+		echo "<tr><th width='15%'>Time</th><th width='15%'>User</th><th width='55%'>Action</th><th width='15%'>IP Address</th></tr>";
+		$num_lim = mysql_num_rows($log_query_lim);
+		for($y=1;$y<=$num_lim;$y++){
+			$feth_lim = mysql_fetch_array($log_query_lim);
+			echo "<tr>";
+				echo "<td>".$feth_lim[log_Date]."</td>";
+				echo "<td>".$feth_lim[User]."</td>";
+				echo "<td>";
+				echo $feth_lim[Action];
+				echo "</td>";
+				echo "<td>".$feth_lim[ip]."</td>";
+			echo "</tr>";
+
+		}
+		echo "</table>";
+
+		echo "</div>";
 
 
 }
+	
+
+
+
 ?>

@@ -1,8 +1,10 @@
 <?php
 session_start();
+require_once("gadget.php");
 function user_status ($expression_us){
 
 	require_once("dbo.php");
+	
 	?>
 	<script src="js/ajax.js"> </script>
 	<?
@@ -28,6 +30,9 @@ function user_status ($expression_us){
 			echo "<th width='70'><center>แก้ไขผู้ใช้</center></th>";
 
 		echo "</tr>";
+		if ($expression_us==1){
+			$expression_us = "WHERE StatusID != '2'";
+		}
 	
 		$query_user = mysql_query("SELECT * FROM permission_table $expression_us ORDER BY StatusID,UserName ASC");
 			while ($data_user = mysql_fetch_array($query_user)){
@@ -305,7 +310,7 @@ function user_status ($expression_us){
 				$data[8] = 1;
 			}
 			else $data[8] = 0;
-
+			update_log("add user ".$data[0]." to DB ,",get_client_ip(),$_SESSION['username'],"add_user");
 			mysql_query("INSERT INTO permission_table VALUES ('','$data[0]','$data[1]','','$data[2]','$data[3]','$data[4]','$insert','$update','$delete','$data[7]','$data[5]','$tel3','$data[8]')");
 				user_status();
 
@@ -332,6 +337,7 @@ function user_status ($expression_us){
   		<input type="text" class="input-medium search-query" id="s_tel" placeholder="ค้นหาโดยเบอร์โทรศัพท์">
   		<button type="button" class="s_btn btn"><i class="icon-search"></i> ค้นหา</button>
 		</form>
+		<br>
 		<?
 	}
 	function user_edit($edit_uid,$hchk){
@@ -536,6 +542,7 @@ function user_status ($expression_us){
 
 		//echo $finup_query;
 		mysql_query($finup_query);
+		update_log("Update profile On user = ".$update_usr_data[0]." ,",get_client_ip(),$_SESSION['username'],"updat_user");
 		echo "<script> alert('ทำการบัณทึกข้อมูลแล้ว'); </script>";
 		user_edit($update_usr_data[0]);
 

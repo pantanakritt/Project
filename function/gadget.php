@@ -107,6 +107,7 @@ function login(){
 		$nums = mysql_num_rows($loginquery);
 		$fetchlogin = mysql_fetch_array($loginquery);
 		if($nums >= 1){
+			$_SESSION['log_code'] = date("ymdhis");
 			$_SESSION['sesid'] = session_id();
 			$_SESSION['username'] = $fetchlogin[UserName];
 			$_SESSION['password'] = $fetchlogin[Password];
@@ -115,7 +116,9 @@ function login(){
 			$_SESSION['Update'] = $fetchlogin[Pupdate];
 			$_SESSION['Delete'] = $fetchlogin[Pdelete];
 			$_SESSION['StatusID'] = $fetchlogin[StatusID];
-		
+
+			update_log("-->Login ,",get_client_ip(),$_SESSION['username'],"login");
+			
 			return TRUE;
 			}
 			else return FALSE;
@@ -138,8 +141,14 @@ function login(){
 	}
 
 	function dis_or_activate_user($user,$IDnum){
-		if ($IDnum) $IDnum = FALSE;
-		else $IDnum = TRUE;
+		if ($IDnum==1) {
+			$IDnum = 0;
+			update_log("Change status ".$user." to Disactivate ,",get_client_ip(),$_SESSION['username'],"dis_ac");
+		}
+			else {
+				$IDnum = 1;
+				update_log("Change status ".$user." to Activate ,",get_client_ip(),$_SESSION['username'],"dis_ac");
+			}
 
 		mysql_query("UPDATE permission_table SET StatusID='$IDnum' WHERE UserName = '$user'");
 	}
@@ -147,8 +156,10 @@ function login(){
 	function delete_user($del_user){
 		require_once("user.php");
 		if(chk_admin()){
-			mysql_query("DELETE FROM permission_table WHERE UserName = '$del_user'");
-			user_status();
+			update_log("Delete ".$del_user." ,",get_client_ip(),$_SESSION['username'],"del_user");
+			mysql_query("UPDATE permission_table SET StatusID = '2' WHERE UserName = '$del_user'");
+			
+			user_status("1");
 		}
 		else{
 			
@@ -174,8 +185,10 @@ function utf8_fopen_read($fileName) {
 function imprt_form(){
 	if (isset($_SESSION['tmpcsvname'])){
 		$file = utf8_fopen_read("CSV/".$_SESSION['tmpcsvname']);
+		echo "<br><br>";
 		while (!feof($file)&&(file_exists("CSV/".$_SESSION['tmpcsvname']))) {
 		print_r(fgetcsv($file));
+		echo "<br>";
 		}
 
 		fclose($file);
@@ -198,4 +211,39 @@ function imprt_form(){
 	
 }
 
+function get_client_ip() {
+     $ipaddress = '';
+     if ($_SERVER['HTTP_CLIENT_IP'])
+         $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
+     else if($_SERVER['HTTP_X_FORWARDED_FOR'])
+         $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+     else if($_SERVER['HTTP_X_FORWARDED'])
+         $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
+     else if($_SERVER['HTTP_FORWARDED_FOR'])
+         $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
+     else if($_SERVER['HTTP_FORWARDED'])
+         $ipaddress = $_SERVER['HTTP_FORWARDED'];
+     else if($_SERVER['REMOTE_ADDR'])
+         $ipaddress = $_SERVER['REMOTE_ADDR'];
+     else
+         $ipaddress = 'UNKNOWN';
+
+     return $ipaddress; 
+}
+
+function update_log($action,$ip,$user,$logcode){
+	
+	if($logcode=="login"){
+		mysql_query("INSERT INTO dblog_table (user,action,ip,log_code) VALUES ('$user','$action','$ip','".$_SESSION['log_code']."')");
+	}
+	else {
+		$log_query = mysql_query("SELECT action FROM dblog_table WHERE log_code = '".$_SESSION['log_code']."'");
+		$log_fetch = mysql_fetch_array($log_query);
+
+		$log_fetch[0] .= $action;
+
+		mysql_query("UPDATE dblog_table SET action='$log_fetch[0]' WHERE log_code = '".$_SESSION['log_code']."'");
+
+	}
+}
 ?>

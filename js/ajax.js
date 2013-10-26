@@ -56,16 +56,16 @@ $(document).ready(function(){
 		};
 		
 		//--------------------------- Log Out -------------------------------
-		$(".logout").click(function(event){
-			event.preventDefault();
-			function_logout("check_logout");
+		//$(".logout").click(function(event){
+		//	event.preventDefault();
+		//	function_logout("check_logout");
 			
-		});
+		//});
 
-		var function_logout = function(type){
-			var data = {"type_view" : type};
-			ajax_common(data,"function/AjaxUpdate.php","POST",$(".updates"));
-		};
+		//var function_logout = function(type){
+		//	var data = {"type_view" : type};
+		//	ajax_common(data,"function/AjaxUpdate.php","POST",$(".updates"));
+		//};
 
 		//------------------------ Status User ------------------------------
 
@@ -249,7 +249,29 @@ $(document).ready(function(){
 			ajax_common(data,"function/schedule.php?func=0","POST",$(".updates"));
 		};
 
+		//--------------------------------LOg file ------------------------------
 
+		$(".view_log").click(function(event){
+			event.preventDefault();
+			function_view_log("show_log");
+		});
+
+		$(".page_dvide").click(function(event){
+			event.preventDefault();
+			var num_page = $(this).html();
+			function_get_pagelog("getpage",num_page);
+		});
+
+
+		var function_view_log = function(type){
+			var data = {"type_view" : type};
+			ajax_common(data,"function/Ajaxupdate.php","POST",$(".updates"));
+		};
+
+		var function_get_pagelog = function(type,npage){
+			var data = {"type_view" : type, "num_lim" : npage };
+			ajax_common(data,"function/Ajaxupdate.php","POST",$(".show_log_page"));
+		};
 		
 		
 

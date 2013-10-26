@@ -185,6 +185,7 @@ login();
                   <li><a tabindex="-1" class='add_user' href="#">เพิ่มผู้ใช้งาน</a></li>
                   <li><a tabindex="-1" class='search_ulink' href="#">ค้นหาผู้ใช้งาน</a></li>
                   <li ><a tabindex="-1" class='status_user' href="#">สถานะผู้ใช้งาน</a></li>
+                  <li ><a tabindex="-1" class='view_log' href="#">ข้อมูลการใช้งานระบบ</a></li>
                 </ul>
            
            </li>
@@ -195,7 +196,7 @@ login();
            </li>
           
            <li>
-           		<a tabindex="-1"  class="logout" href="#"><i class="icon-off"></i>&nbsp;&nbsp;ออกจากระบบ</a>
+           		<a tabindex="-1" href="function/logout.php"><i class="icon-off"></i>&nbsp;&nbsp;ออกจากระบบ</a>
            
            </li>
            </ul>
