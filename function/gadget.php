@@ -106,9 +106,11 @@ function login(){
 		$loginquery = mysql_query("SELECT * FROM permission_table WHERE UserName = '$user' && Password = '$password'");
 		$nums = mysql_num_rows($loginquery);
 		$fetchlogin = mysql_fetch_array($loginquery);
+
 		if($nums >= 1){
 			$_SESSION['log_code'] = date("ymdhis");
 			$_SESSION['sesid'] = session_id();
+			$_SESSION['tmpcsvname'] = $fetchlogin[CSVname];
 			$_SESSION['username'] = $fetchlogin[UserName];
 			$_SESSION['password'] = $fetchlogin[Password];
 			$_SESSION['SuperUser'] = $fetchlogin[SuperUser];
@@ -117,7 +119,7 @@ function login(){
 			$_SESSION['Delete'] = $fetchlogin[Pdelete];
 			$_SESSION['StatusID'] = $fetchlogin[StatusID];
 
-			update_log("-->Login ,",get_client_ip(),$_SESSION['username'],"login");
+			//update_log("-->Login ,",get_client_ip(),$_SESSION['username'],"login");
 			
 			return TRUE;
 			}
@@ -143,11 +145,11 @@ function login(){
 	function dis_or_activate_user($user,$IDnum){
 		if ($IDnum==1) {
 			$IDnum = 0;
-			update_log("Change status ".$user." to Disactivate ,",get_client_ip(),$_SESSION['username'],"dis_ac");
+			update_log("Change status ".$user." to Disactivate <br>",get_client_ip(),$_SESSION['username'],"dis_ac");
 		}
 			else {
 				$IDnum = 1;
-				update_log("Change status ".$user." to Activate ,",get_client_ip(),$_SESSION['username'],"dis_ac");
+				update_log("Change status ".$user." to Activate <br>",get_client_ip(),$_SESSION['username'],"dis_ac");
 			}
 
 		mysql_query("UPDATE permission_table SET StatusID='$IDnum' WHERE UserName = '$user'");
@@ -156,7 +158,7 @@ function login(){
 	function delete_user($del_user){
 		require_once("user.php");
 		if(chk_admin()){
-			update_log("Delete ".$del_user." ,",get_client_ip(),$_SESSION['username'],"del_user");
+			update_log("Delete ".$del_user." <br>",get_client_ip(),$_SESSION['username'],"del_user");
 			mysql_query("UPDATE permission_table SET StatusID = '2' WHERE UserName = '$del_user'");
 			
 			user_status("1");
@@ -168,7 +170,7 @@ function login(){
 				alert("คุณไม่มีสิทธิ์ในการแก้ไขข้อมูล กรุณาติดต่อผู้ดูแลระบบ !!!");
 				</script>
 			<?
-			user_status();
+			user_status("1");
 
 		}
 
@@ -183,24 +185,47 @@ function utf8_fopen_read($fileName) {
 	} 
 
 function imprt_form(){
-	if (isset($_SESSION['tmpcsvname'])){
-		$file = utf8_fopen_read("CSV/".$_SESSION['tmpcsvname']);
-		echo "<br><br>";
-		while (!feof($file)&&(file_exists("CSV/".$_SESSION['tmpcsvname']))) {
-		print_r(fgetcsv($file));
-		echo "<br>";
+
+	if (isset($_SESSION['tmpcsvname'])&&($_SESSION['tmpcsvname']!=""||$_SESSION['tmpcsvname']!="null")){
+		if (file_exists("../CSV/".$_SESSION['tmpcsvname'])){
+			$file_location = "../CSV/".$_SESSION['tmpcsvname'];
 		}
+			else if (file_exists("CSV/".$_SESSION['tmpcsvname'])){
+				$file_location = "CSV/".$_SESSION['tmpcsvname'];
+			}
 
-		fclose($file);
+
+		if(file_exists($file_location)){
+			$file = utf8_fopen_read($file_location);
+			echo "<br><br>";
+			while (!feof($file)) {
+			print_r(fgetcsv($file));
+			echo "<br>";
+			}
+
+			fclose($file);
 
 
-  		unlink("CSV/".$_SESSION['tmpcsvname']);
-  		
+	  		//unlink("CSV/".$_SESSION['tmpcsvname']);
+	  		
 
-		echo "<br><br>";
-		echo "This is import function";
+			echo "<br><br>";
+			echo "This is import function";
 
-		unset($_SESSION['tmpcsvname']);
+			//unset($_SESSION['tmpcsvname']);
+		}
+		else {
+			$_SESSION['tmpcsvname'] = "";
+			?>
+			<script>
+			alert("เกิดข้อผิดพลาดกรุณาอัพโหลดไฟล์ข้อมูลอีกครั้ง");
+			</script>
+			<?
+			require_once("schedule.php");
+			cvsform_upload();
+
+
+		}
 	}
 
 	else {
@@ -238,11 +263,18 @@ function update_log($action,$ip,$user,$logcode){
 	}
 	else {
 		$log_query = mysql_query("SELECT action FROM dblog_table WHERE log_code = '".$_SESSION['log_code']."'");
+		
+		if(mysql_num_rows($log_query)==1){
 		$log_fetch = mysql_fetch_array($log_query);
 
 		$log_fetch[0] .= $action;
 
 		mysql_query("UPDATE dblog_table SET action='$log_fetch[0]' WHERE log_code = '".$_SESSION['log_code']."'");
+		}
+		else {
+
+			mysql_query("INSERT INTO dblog_table (user,action,ip,log_code) VALUES ('$user','$action','$ip','".$_SESSION['log_code']."')");
+		}
 
 	}
 }

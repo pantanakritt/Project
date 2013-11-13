@@ -244,11 +244,14 @@ $(document).ready(function(){
 			function_csv_form("csv_form");
 		});
 
+		
+
 		var function_csv_form = function(type){
 			var data = {"type_view" : type};
 			ajax_common(data,"function/schedule.php?func=0","POST",$(".updates"));
 		};
 
+		
 		//--------------------------------LOg file ------------------------------
 
 		$(".view_log").click(function(event){

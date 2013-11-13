@@ -310,7 +310,7 @@ function user_status ($expression_us){
 				$data[8] = 1;
 			}
 			else $data[8] = 0;
-			update_log("add user ".$data[0]." to DB ,",get_client_ip(),$_SESSION['username'],"add_user");
+			update_log("add user ".$data[0]." to database <br>",get_client_ip(),$_SESSION['username'],"add_user");
 			mysql_query("INSERT INTO permission_table VALUES ('','$data[0]','$data[1]','','$data[2]','$data[3]','$data[4]','$insert','$update','$delete','$data[7]','$data[5]','$tel3','$data[8]')");
 				user_status();
 
@@ -542,7 +542,7 @@ function user_status ($expression_us){
 
 		//echo $finup_query;
 		mysql_query($finup_query);
-		update_log("Update profile On user = ".$update_usr_data[0]." ,",get_client_ip(),$_SESSION['username'],"updat_user");
+		update_log("Update profile On user = ".$update_usr_data[0]." <br>",get_client_ip(),$_SESSION['username'],"updat_user");
 		echo "<script> alert('ทำการบัณทึกข้อมูลแล้ว'); </script>";
 		user_edit($update_usr_data[0]);
 

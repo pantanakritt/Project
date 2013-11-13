@@ -46,14 +46,6 @@ else if ($_POST['type_view'] == "check_login"){
 		}
 }
 
-else if ($_POST['type_view'] == "check_logout"){
-	update_log("---> Logout",get_client_ip(),$_SESSION['username'],"log_out");
-	session_destroy();
-	echo "<script>";
-	//echo "alert('');";
-	echo "window.location.href='index.php'</script>";
-	
-	}
 
 	else if ($_POST['type_view'] == "status_users"){
 			user_status("1");
