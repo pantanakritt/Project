@@ -171,7 +171,13 @@ login();
 
                         <? } ?>
                     <? if($_SESSION['SuperUser']||$_SESSION['Insert']) { ?> 
-                        <li><a tabindex="-1" class="csv_link" href="#">Import ข้อมูลจากไฟล์(csv)</a></li>
+                        <li class="dropdown-submenu"><a tabindex="-1" href="#">การจัดการไฟล์(csv)</a>
+                          <ul class="dropdown-menu">
+                            <li><a tabindex="-1" class="csv_link" href="#">Import ข้อมูลจากไฟล์(csv)</a></li>
+                            <li><a tabindex="-1" class="csv_clear" href="#">ยกเลิกการนำเข้า(csv)</a>
+                            <? if($_SESSION['SuperUser']) {?><li><a tabindex="-1" class="csv_clear_cache" href="#">ล้างข้อมูลใน temp cache</a> <?}?>
+                          </ul>
+                        </li>
                         <? } ?>
                     <? if($_SESSION['Update']||$_SESSION['SuperUser']) { ?> <li><a tabindex="-1"  href="#">แก้ไขข้อมูลตารางสอน</a></li> 
                         <? } ?>
@@ -182,10 +188,10 @@ login();
          <? if ($_SESSION['SuperUser']) {?> <li class="dropdown-submenu">
               <a tabindex="-1" href="#">ส่วนจัดการสำหรับผู้ดูแลระบบ</a>
                 <ul class="dropdown-menu">
-                  <li><a tabindex="-1" class='add_user' href="#">เพิ่มผู้ใช้งาน</a></li>
-                  <li><a tabindex="-1" class='search_ulink' href="#">ค้นหาผู้ใช้งาน</a></li>
-                  <li ><a tabindex="-1" class='status_user' href="#">สถานะผู้ใช้งาน</a></li>
-                  <li ><a tabindex="-1" class='view_log' href="#">ข้อมูลการใช้งานระบบ</a></li>
+                  <li><a tabindex='-1' class='add_user' href="#">เพิ่มผู้ใช้งาน</a></li>
+                  <li><a tabindex='-1' class='search_ulink' href="#">ค้นหาผู้ใช้งาน</a></li>
+                  <li ><a tabindex='-1' class='status_user' href="#">สถานะผู้ใช้งาน</a></li>
+                  <li ><a tabindex='-1' class='view_log' href="#">ข้อมูลการใช้งานระบบ</a></li>
                 </ul>
            
            </li>

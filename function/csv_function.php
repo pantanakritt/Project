@@ -105,6 +105,7 @@ function teacher_name($name){
 
 		@unlink("../CSV/".$_SESSION['tmpcsvname']);
 		unset($_SESSION['tmpcsvname']);
+		mysql_query("DELETE FROM temp_schedule_table WHERE user ='".$_SESSION['username']."'");
 		mysql_query("UPDATE permission_table SET CSVname = '' WHERE UserName = '".$_SESSION['username']."'");
 		$_GET['type_view'] = "csv_form";
 		$_POST['type_view'] = "csv_form";
@@ -154,14 +155,21 @@ function teacher_name($name){
 					//	fclose($file);
 					echo "Error in LINE : ";
 					echo $num_arry-2;
-					mysql_query("ROLLBACK");
+					echo "<br>";
+					//mysql_query("ROLLBACK");
 					}
 
 				}
 
 			}
 
-			mysql_query("ROLLBACK");
+			if($obj_err == "ERROR") {
+				mysql_query("ROLLBACK");
+				$obj_err = '';
+			}
+			else {
+				mysql_query("COMMIT");
+			}
 
 		}
 
@@ -173,7 +181,25 @@ function teacher_name($name){
 
 		echo "<div align='center'><font size='5'>Invalid Option !!</font></div>";
 	}
+//----------------------------------------------------------------------------------------------------------------
+	else if ($_POST[type_view]=="csv_clear_cache") {
+		$obj_cache = mysql_query("SELECT * FROM temp_schedule_table");
+		$num_cache = mysql_num_rows($obj_cache);
+		mysql_query("TRUNCATE TABLE 'temp_schedule_table'");
+		for ($x111 = 0;$x111 < $num_cache ; $x111++){
+			$cache_fetch = mysql_fetch_array($obj_cache);
+				$obj_cache_query = "INSERT INTO temp_schedule_table ";
+				$obj_cache_query .= "(user,std_type,course_code,course_name,section,day,time_start,time_end,room,major_code,titlename,first_name,last_name) ";
+				$obj_cache_query .= "VALUES ";
+				$obj_cache_query .= "('".$cache_fetch[user]."','".$cache_fetch[std_type]."','".$cache_fetch[course_code]."','".$cache_fetch[course_name]."','".$cache_fetch[section]."','".$cache_fetch[day];
+				$obj_cache_query .= "','".$cache_fetch[time_start]."','".$cache_fetch[time_end]."','".$cache_fetch[room]."','".$cache_fetch[major_code]."','".$cache_fetch[titlename]."','".$cache_fetch[first_name]."','".$cache_fetch[last_name]."')";
 
+				mysql_query($obj_cache_query);
+
+		}
+		
+		cvsform_upload();
+	}
 
 
 
