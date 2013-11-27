@@ -147,14 +147,15 @@ function teacher_name($name){
 					$mysql_obj = mysql_query($fin_query);
 					//echo $fin_query."<br><br>x".ereg_replace(" ", '',spilt_time($csv_arry[4],"STRT"))." --- ".spilt_time($csv_arry[4],"ETRT")."<br><br>";
 
-					//if($mysql_obj){
+					if($mysql_obj){
 
-					//}
-					//else{
+					}
+					else{
 					//	fclose($file);
-					//	echo "Error in LINE : ".$num_arry-2;
-					//	mysql_query("ROLLBACK");
-					//}
+					echo "Error in LINE : ";
+					echo $num_arry-2;
+					mysql_query("ROLLBACK");
+					}
 
 				}
 
