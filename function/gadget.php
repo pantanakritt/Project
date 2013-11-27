@@ -119,7 +119,7 @@ function login(){
 			$_SESSION['Delete'] = $fetchlogin[Pdelete];
 			$_SESSION['StatusID'] = $fetchlogin[StatusID];
 
-			//update_log("-->Login ,",get_client_ip(),$_SESSION['username'],"login");
+			update_log('',get_client_ip(),$_SESSION['username'],"login");
 			
 			return TRUE;
 			}
@@ -185,7 +185,7 @@ function utf8_fopen_read($fileName) {
 	} 
 
 function imprt_form(){
-
+	echo "<script src='js/ajax.js'> </script>";
 	if (isset($_SESSION['tmpcsvname'])&&($_SESSION['tmpcsvname']!=""||$_SESSION['tmpcsvname']!="null")){
 		if (file_exists("../CSV/".$_SESSION['tmpcsvname'])){
 			$file_location = "../CSV/".$_SESSION['tmpcsvname'];
@@ -197,10 +197,44 @@ function imprt_form(){
 
 		if(file_exists($file_location)){
 			$file = utf8_fopen_read($file_location);
-			echo "<br><br>";
+			echo "<br><br><div align='center'><font size='5'>นำเข้าข้อมูลจากไฟล์ CSV</font></div><br><table class='table table-bordered'>";
+				echo "<tr><th><center>ลำดับ</th><th><center>ประเภทนักศึกษา</th><th><center>รหัสวิชา</th><th><center>ชื่อวิชา</th><th><center>Section</th><th><center>เวลา</th><th><center>ห้องเรียน</th><th><center>รหัสหมู่เรียน</th><th><center>อาจารย์ผู้สอน</th></tr>";
+				$strspilt = explode('_',$_SESSION['tmpcsvname']);
+				echo "<div align='center'>นำเข้าข้อมูลครั้งล่าสุดเมื่อ ".$strspilt[4].":".$strspilt[5]." วันที่ ".$strspilt[3]."/".$strspilt[2]."/".$strspilt[1]."</div>";
 			while (!feof($file)) {
-			print_r(fgetcsv($file));
-			echo "<br>";
+				$csv_arry = fgetcsv($file);
+				$numarry += 1;
+				if ($numarry==1 || $numarry==2){
+
+				}
+				else {
+					if($numarry%2==0) echo "<tr class='success'>";
+					else echo "<tr class='info'>";
+						echo "<td>";
+						echo $numarry-2;
+						echo "</td>";
+					echo "<td>".$csv_arry[0]."</td>";
+					echo "<td>".$csv_arry[1]."</td>";
+					echo "<td>".$csv_arry[2]."</td>";
+					echo "<td>".$csv_arry[3]."</td>";
+					echo "<td>".$csv_arry[4]."</td>";
+					echo "<td>".$csv_arry[5]."</td>";
+					echo "<td>".$csv_arry[6]."</td>";
+					echo "<td>".$csv_arry[7]."</td>";
+					if ($csv_arry[8]!=""){
+						echo "<td>".$csv_arry[8]."</td>";
+					}
+					if ($csv_arry[9]!=""){
+						echo "<td>".$csv_arry[9]."</td>";
+					}
+					if ($csv_arry[9]!=""){
+						echo "<td>".$csv_arry[9]."</td>";
+					}
+					echo "</tr>";
+				}
+
+			//print_r(fgetcsv($file));
+			//echo "<br>";
 			}
 
 			fclose($file);
@@ -209,9 +243,14 @@ function imprt_form(){
 	  		//unlink("CSV/".$_SESSION['tmpcsvname']);
 	  		
 
-			echo "<br><br>";
-			echo "This is import function";
-
+			echo "</table><br>";
+		
+			echo "<div class='btn-toolbar pull-right'>";
+			echo "<div class='btn-group'>";
+			echo "<button class='btn csv_ok'>ตกลง</button>";
+			echo "<button class='btn csv_clear'>ยกเลิก</button>";
+			echo "</div>";
+			echo "</div>";
 			//unset($_SESSION['tmpcsvname']);
 		}
 		else {
@@ -259,7 +298,7 @@ function get_client_ip() {
 function update_log($action,$ip,$user,$logcode){
 	
 	if($logcode=="login"){
-		mysql_query("INSERT INTO dblog_table (user,action,ip,log_code) VALUES ('$user','$action','$ip','".$_SESSION['log_code']."')");
+		mysql_query("UPDATE permission_table SET Lastlog = '".date('d m y h i')." $ip' WHERE UserName = '$user'");
 	}
 	else {
 		$log_query = mysql_query("SELECT action FROM dblog_table WHERE log_code = '".$_SESSION['log_code']."'");

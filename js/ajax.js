@@ -338,7 +338,26 @@ $(document).ready(function(){
 			ajax_common(data,"function/Ajaxupdate.php","POST",$(".show_log_page"));
 		};
 		
-		
+	//------------------------------------------------- CSV save / unsave -------------------------------
+		$(".csv_clear").click(function(event){
+			event.preventDefault();
+			function_clear_csv("clear_csv");
+		});
+
+		$(".csv_ok").click(function(event){
+			event.preventDefault();
+			function_save_csv("csv_ok");
+		});
+
+		var function_clear_csv = function(type){
+			var data = {"type_view" : type};
+			ajax_common(data,"function/csv_function.php","POST",$(".updates"));
+		};
+
+		var function_save_csv = function(type){
+			var data = {"type_view" : type};
+			ajax_common(data,"function/csv_function.php","POST",$(".updates"));
+		};
 
 	});
 

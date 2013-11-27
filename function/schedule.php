@@ -34,7 +34,7 @@ require_once("dbo.php");
 						//---------------------------------------------------------------------------------------------------
 
 						//move_uploaded_file($_FILES["file"]["tmp_name"], "CSV/".$_FILES['file']['name']);
-						$_SESSION['tmpcsvname'] = "tempCSV".date("Y_m_d_H_i_s").".csv";
+						$_SESSION['tmpcsvname'] = "tempCSV_".date("Y_m_d_H_i_s").".csv";
 						move_uploaded_file($_FILES["file"]["tmp_name"], "../CSV/".$_SESSION['tmpcsvname']);
 						$_GET['func'] = 1;
 						require_once("gadget.php");

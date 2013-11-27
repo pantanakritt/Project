@@ -93,8 +93,21 @@ $fetch = mysql_fetch_array($qry);
 echo $fetch[0];
 
 }
+$str1 = "ฟ69";
 
-echo (23/20)+1;
+//echo "a".$str1."a<br>";
+echo $str1;
+echo "<br>";
+ 
+   
+   while (!ereg("^[0-9]", $str1)) {
+     $str1 = ereg_replace("^.", '', $str1);
+   }
+
+   
+
+
+
 
 
 
