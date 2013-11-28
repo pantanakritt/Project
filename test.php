@@ -93,16 +93,26 @@ $fetch = mysql_fetch_array($qry);
 echo $fetch[0];
 
 }
-$str1 = "ฟ69";
+$str1 = "ฟasdฟหกฟห69";
+
 
 //echo "a".$str1."a<br>";
 echo $str1;
 echo "<br>";
- 
+for ($str2 = 0 ; $str2 <= 100 ; $str2++){
+if (strrpos($str1, $str2)){
+  echo "TRUE<br>";
+  $str2 = 200;
+
+}
+ else {
+  echo "FALSE<br>";
+ }
+}
    
-   while (!ereg("^[0-9]", $str1)) {
-     $str1 = ereg_replace("^.", '', $str1);
-   }
+   //while (!ereg("^[0-9]", $str1)) {
+ //    $str1 = ereg_replace("^.", '', $str1);
+ //  }
 
    
 

@@ -349,7 +349,7 @@ $(document).ready(function(){
 			function_csv_clear("csv_ok");
 		});
 
-		$(".csv_clear_cache").click(function(event)){
+		$(".csv_clear_cache").click(function(event){
 			event.preventDefault();
 			function_csv_clear("csv_clear_cache");
 		});
