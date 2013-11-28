@@ -5,16 +5,26 @@ require_once("schedule.php");
 require_once("dbo.php");
 require_once("gadget.php");
 //------------------------------------------------------------------------------------------------------------------------------------------------
-function es_time($a_time){
+function es_time($a_time,$a_choice=''){
 	//$a_time = 'A'.$a_time;
 	$a_timenum = strlen($a_time);
-	echo ord($a_time[0])."---";
-	echo ord($a_time[1]);
-	for($xt=0;$xt<$a_timenum;$xt++){
-		if ((ord($a_time[$xt])>=48)&&(ord($a_time[$xt])<=57)){
-
-			$a_send .= $a_time[$xt];
+	if($a_choice=='BGIN'){
+		//echo ord($a_time[0])."---";
+		//echo ord($a_time[1]);
+		$subject = substr($a_time,-2,2);
+		echo $a_time."-".$subject;
+		$pattern = '/([1][0-9])|[1-9]{1}/';
+		preg_match($pattern, $subject, $matches);
+		print_r($matches);
+		$a_send = $matches[0];
+	}
+	else {
+		for ($xx=0;$xx<$a_timenum;$xx++){
+			if((ord($a_time[$xx])<=58)&&(ord($a_time[$xx]>=47))){
+				$a_send .= $a_time[$xx];
+			}
 		}
+		echo "=========X".$a_send."X===";
 	}
 	return $a_send;
 }
@@ -63,11 +73,11 @@ function spilt_time ($char,$choice){
 		return $day_t;
 	}
 	else if ($choice == "STRT") {
-		$send_st = es_time($start_t);
+		$send_st = es_time($start_t,"BGIN");
 		return $start_t;
 	}
 	else if ($choice == "ETRT"){
-		$send_ed = es_time($end_t);
+		$send_ed = es_time($end_t,"ENDT");
 		return $send_ed;
 	}
 	else {
