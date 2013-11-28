@@ -112,88 +112,93 @@ function teacher_name($name){
 	}
 //------------------------------------------------------------------------------------------------------------------------------------------------
 	else if($_POST[type_view]=="csv_ok"){
-		
-		if (file_exists("../CSV/".$_SESSION['tmpcsvname'])){
-			$file_location = "../CSV/".$_SESSION['tmpcsvname'];
-		}
-			else if (file_exists("CSV/".$_SESSION['tmpcsvname'])){
-				$file_location = "CSV/".$_SESSION['tmpcsvname'];
+		$num_tmp = mysql_num_rows(mysql_query("SELECT * FROM temp_schedule_table WHERE user = '".$_SESSION['username']."'"));
+		//if($num_tmp<1){
+			if (file_exists("../CSV/".$_SESSION['tmpcsvname'])){
+				$file_location = "../CSV/".$_SESSION['tmpcsvname'];
 			}
+				else if (file_exists("CSV/".$_SESSION['tmpcsvname'])){
+					$file_location = "CSV/".$_SESSION['tmpcsvname'];
+				}
 
-		if(file_exists($file_location)){
-			
-			$file = utf8_fopen_read($file_location);
-			mysql_query("BEGIN");
-			while (!feof($file)) {
+			if(file_exists($file_location)){
+				
+				$file = utf8_fopen_read($file_location);
+				mysql_query("BEGIN");
+				while (!feof($file)) {
 
-				$num_arry+= 1;
-				if($num_arry==1 || $num_arry == 2){
-					$csv_arry = fgetcsv($file);
+					$num_arry+= 1;
+					if($num_arry==1 || $num_arry == 2){
+						$csv_arry = fgetcsv($file);
+					}
+					else {
+						$csv_arry = fgetcsv($file);
+
+						$name_arry = explode(',',teacher_name($csv_arry[7]));
+
+						$ed_t = spilt_time($csv_arry[4],"STRT");
+						$query1 = "INSERT INTO temp_schedule_table ";
+						$query2 = "(user,std_type,course_code,course_name,section,day,time_start,time_end,room,major_code,titlename,first_name,last_name) ";
+						$query3 = "VALUES ";
+						$query4 = "('".$_SESSION['username']."','".$csv_arry[0]."','".$csv_arry[1]."','".$csv_arry[2]."','".$csv_arry[3]."','".spilt_time($csv_arry[4],"DAY");
+						$query5 = "','".$ed_t[2]."','".spilt_time($csv_arry[4],"ETRT")."','".$csv_arry[5]."','".$csv_arry[6]."','".$name_arry[0]."','".$name_arry[1]."','".$name_arry[2]."')";
+
+						$fin_query = $query1.$query2.$query3.$query4.$query5;
+
+						$mysql_obj = mysql_query($fin_query);
+						//echo $fin_query."<br><br>x".ereg_replace(" ", '',spilt_time($csv_arry[4],"STRT"))." --- ".spilt_time($csv_arry[4],"ETRT")."<br><br>";
+
+						if($mysql_obj){
+							$aaaa = spilt_time($csv_arry[4],"STRT");
+							echo "-X-".ord($aaaa[0])."&&".ord($aaaa[1])."-X-".strlen($aaaa)."--X--".$aaaa."<br>";
+						}
+						else{
+						//	fclose($file);
+						echo "Error in LINE : ";
+						echo $num_arry-2;
+						echo "<br>";
+						//mysql_query("ROLLBACK");
+						$obj_err = "ERROR";
+						}
+					}
+				}
+
+				if($obj_err == "ERROR") {
+					mysql_query("ROLLBACK");
+					$obj_err = '';
 				}
 				else {
-					$csv_arry = fgetcsv($file);
-
-					$name_arry = explode(',',teacher_name($csv_arry[7]));
-
-					$ed_t = spilt_time($csv_arry[4],"STRT");
-					$query1 = "INSERT INTO temp_schedule_table ";
-					$query2 = "(user,std_type,course_code,course_name,section,day,time_start,time_end,room,major_code,titlename,first_name,last_name) ";
-					$query3 = "VALUES ";
-					$query4 = "('".$_SESSION['username']."','".$csv_arry[0]."','".$csv_arry[1]."','".$csv_arry[2]."','".$csv_arry[3]."','".spilt_time($csv_arry[4],"DAY");
-					$query5 = "','".$ed_t[2]."','".spilt_time($csv_arry[4],"ETRT")."','".$csv_arry[5]."','".$csv_arry[6]."','".$name_arry[0]."','".$name_arry[1]."','".$name_arry[2]."')";
-
-					$fin_query = $query1.$query2.$query3.$query4.$query5;
-
-					$mysql_obj = mysql_query($fin_query);
-					//echo $fin_query."<br><br>x".ereg_replace(" ", '',spilt_time($csv_arry[4],"STRT"))." --- ".spilt_time($csv_arry[4],"ETRT")."<br><br>";
-
-					if($mysql_obj){
-						$aaaa = spilt_time($csv_arry[4],"STRT");
-						echo "-X-".ord($aaaa[0])."&&".ord($aaaa[1])."-X-".strlen($aaaa)."--X--".$aaaa[2]."<br>";
-					}
-					else{
-					//	fclose($file);
-					echo "Error in LINE : ";
-					echo $num_arry-2;
-					echo "<br>";
-					//mysql_query("ROLLBACK");
-					$obj_err = "ERROR";
-					}
+					mysql_query("COMMIT");
 				}
+				fclose($file);
 			}
-
-			if($obj_err == "ERROR") {
-				mysql_query("ROLLBACK");
-				$obj_err = '';
-			}
-			else {
-				mysql_query("COMMIT");
-			}
-			fclose($file);
-		}
+		//}
+		//else {
+			//echo "<script>alert('คุณได้ทำการ อัพโหลดไฟล์ CVS แล้วกรุณาตรวจสอบ');window.location.href='../Project/index.php'</script>";
+		//}
 	}
 
-	
-//----------------------------------------------------------------------------------------------------------------
-	else if($_POST[type_view]=="csv_clear_cache"){
-		$obj_cache = mysql_query("SELECT * FROM temp_schedule_table");
-		$num_cache = mysql_num_rows($obj_cache);
-		mysql_query("TRUNCATE TABLE temp_schedule_table");
-		for ($x111=0;$x111<$num_cache;$x111++){
-			$cache_fetch = mysql_fetch_array($obj_cache);
-				$obj_cache_query = "INSERT INTO temp_schedule_table ";
-				$obj_cache_query .= "(user,std_type,course_code,course_name,section,day,time_start,time_end,room,major_code,titlename,first_name,last_name) ";
-				$obj_cache_query .= "VALUES ";
-				$obj_cache_query .= "('".$cache_fetch[user]."','".$cache_fetch[std_type]."','".$cache_fetch[course_code]."','";
-				$obj_cache_query .= $cache_fetch[course_name]."','".$cache_fetch[section]."','".$cache_fetch[day];
-				$obj_cache_query .= "','".$cache_fetch[time_start]."','".$cache_fetch[time_end]."','".$cache_fetch[room]."','";
-				$obj_cache_query .= $cache_fetch[major_code]."','".$cache_fetch[titlename]."','".$cache_fetch[first_name]."','".$cache_fetch[last_name]."')";
-
-				mysql_query($obj_cache_query);
-
-		}
 		
-		cvsform_upload();
+	//----------------------------------------------------------------------------------------------------------------
+		else if($_POST[type_view]=="csv_clear_cache"){
+			$obj_cache = mysql_query("SELECT * FROM temp_schedule_table");
+			$num_cache = mysql_num_rows($obj_cache);
+			mysql_query("TRUNCATE TABLE temp_schedule_table");
+			for ($x111=0;$x111<$num_cache;$x111++){
+				$cache_fetch = mysql_fetch_array($obj_cache);
+					$obj_cache_query = "INSERT INTO temp_schedule_table ";
+					$obj_cache_query .= "(user,std_type,course_code,course_name,section,day,time_start,time_end,room,major_code,titlename,first_name,last_name) ";
+					$obj_cache_query .= "VALUES ";
+					$obj_cache_query .= "('".$cache_fetch[user]."','".$cache_fetch[std_type]."','".$cache_fetch[course_code]."','";
+					$obj_cache_query .= $cache_fetch[course_name]."','".$cache_fetch[section]."','".$cache_fetch[day];
+					$obj_cache_query .= "','".$cache_fetch[time_start]."','".$cache_fetch[time_end]."','".$cache_fetch[room]."','";
+					$obj_cache_query .= $cache_fetch[major_code]."','".$cache_fetch[titlename]."','".$cache_fetch[first_name]."','".$cache_fetch[last_name]."')";
+
+					mysql_query($obj_cache_query);
+
+			}
+			
+			cvsform_upload();
 	}
 //------------------------------------ Invalid Option -------------------------------------------------------------------------------
 else {

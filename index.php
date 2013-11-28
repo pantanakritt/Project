@@ -174,6 +174,7 @@ login();
                         <li class="dropdown-submenu"><a tabindex="-1" href="#">การจัดการไฟล์(csv)</a>
                           <ul class="dropdown-menu">
                             <li><a tabindex="-1" class="csv_link" href="#">Import ข้อมูลจากไฟล์(csv)</a></li>
+                            <li><a tabindex="-1" class="sss" href="#">ส่วนจัดการไฟล์ import</a></li>
                             <li><a tabindex="-1" class="csv_clear" href="#">ยกเลิกการนำเข้า(csv)</a>
                             <? if($_SESSION['SuperUser']) {?><li><a tabindex="-1" class="csv_clear_cache" href="#">ล้างข้อมูลใน temp cache</a> <?}?>
                           </ul>

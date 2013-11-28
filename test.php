@@ -108,6 +108,9 @@ if (strrpos($str1, $str2)){
  else {
   echo "FALSE<br>";
  }
+
+
+
 }
    
    //while (!ereg("^[0-9]", $str1)) {
@@ -120,6 +123,10 @@ if (strrpos($str1, $str2)){
 
 
 
-
+$subject = "abc 10";
+$pattern = '/([1-9][0-9])|[1-9]{1}/';
+preg_match($pattern, $subject, $matches);
+print_r($matches);
 }
+
 ?>
