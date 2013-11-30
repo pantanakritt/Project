@@ -7,24 +7,23 @@ require_once("gadget.php");
 //------------------------------------------------------------------------------------------------------------------------------------------------
 function es_time($a_time,$a_choice=''){
 	//$a_time = 'A'.$a_time;
+	//$a_send = '';
 	$a_timenum = strlen($a_time);
 	if($a_choice=='BGIN'){
 		//echo ord($a_time[0])."---";
 		//echo ord($a_time[1]);
 		$subject = substr($a_time,-2,2);
-		echo $a_time."-".$subject;
+		//echo $a_time."-".$subject;
 		$pattern = '/([1][0-9])|[1-9]{1}/';
 		preg_match($pattern, $subject, $matches);
-		print_r($matches);
 		$a_send = $matches[0];
 	}
 	else {
 		for ($xx=0;$xx<$a_timenum;$xx++){
-			if((ord($a_time[$xx])<=58)&&(ord($a_time[$xx]>=47))){
+			if((ord($a_time[$xx])>=47)&&(ord($a_time[$xx])<=58)){
 				$a_send .= $a_time[$xx];
 			}
 		}
-		echo "=========X".$a_send."X===";
 	}
 	return $a_send;
 }
@@ -123,7 +122,7 @@ function teacher_name($name){
 //------------------------------------------------------------------------------------------------------------------------------------------------
 	else if($_POST[type_view]=="csv_ok"){
 		$num_tmp = mysql_num_rows(mysql_query("SELECT * FROM temp_schedule_table WHERE user = '".$_SESSION['username']."'"));
-		//if($num_tmp<1){
+		if($num_tmp<1){
 			if (file_exists("../CSV/".$_SESSION['tmpcsvname'])){
 				$file_location = "../CSV/".$_SESSION['tmpcsvname'];
 			}
@@ -159,8 +158,8 @@ function teacher_name($name){
 						//echo $fin_query."<br><br>x".ereg_replace(" ", '',spilt_time($csv_arry[4],"STRT"))." --- ".spilt_time($csv_arry[4],"ETRT")."<br><br>";
 
 						if($mysql_obj){
-							$aaaa = spilt_time($csv_arry[4],"STRT");
-							echo "-X-".ord($aaaa[0])."&&".ord($aaaa[1])."-X-".strlen($aaaa)."--X--".$aaaa."<br>";
+							//$aaaa = spilt_time($csv_arry[4],"STRT");
+							//echo "-X-".ord($aaaa[0])."&&".ord($aaaa[1])."-X-".strlen($aaaa)."--X--".$aaaa."<br>";
 						}
 						else{
 						//	fclose($file);
@@ -182,10 +181,10 @@ function teacher_name($name){
 				}
 				fclose($file);
 			}
-		//}
-		//else {
-			//echo "<script>alert('คุณได้ทำการ อัพโหลดไฟล์ CVS แล้วกรุณาตรวจสอบ');window.location.href='../Project/index.php'</script>";
-		//}
+		}
+		else {
+			echo "<script>alert('คุณได้ทำการ อัพโหลดไฟล์ CVS แล้วกรุณาตรวจสอบ');window.location.href='../Project/index.php'</script>";
+		}
 	}
 
 		
