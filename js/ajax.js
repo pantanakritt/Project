@@ -359,5 +359,29 @@ $(document).ready(function(){
 			ajax_common(data,"function/csv_function.php","POST",$(".updates"));
 		};
 
-	});
+//-------------------------------------------- Insert table ตารางสอน -------------------------------------
 
+		$(".add_teach").click(function(event){
+			event.preventDefault();
+			inst_teachtable("add_teach_table");
+		});
+
+		var inst_teachtable = function(type){
+			var data = {"ajax_update_var" : type};
+			ajax_common(data,"function/Ajaxupdate.php","POST",$(".updates"));
+		};
+
+//----------------------------------------- add multiple teacher --------------------------------------
+		
+		$(".add_multiple_teacher").click(function(event){
+			event.preventDefault();
+			var number_teacher_add = $('.add_multiple_teacher').children(".number_teacher").val();
+			number_teacher_add++;
+			//alert(number_teacher_add);
+			var char_set = "<tr><td>&nbsp;"+number_teacher_add+"&nbsp;</td><td> <input type='text' placeholder='Example : ประยุทธ์'></input></td>	<td><input type='text' placeholder='Example : จันทร์โอชา'></input></td>	</tr>";
+			$('.myTable > tbody:last').append(char_set);
+			$(this).children(".number_teacher").attr('value' ,number_teacher_add)
+
+		});
+
+	});

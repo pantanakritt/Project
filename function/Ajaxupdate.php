@@ -225,6 +225,78 @@ else if($_POST['type_view']=="getpage"){
 		echo "</table>";
 
 }
+
+else if($_POST['ajax_update_var']=="add_teach_table"){
+	echo "<br>";
+	?>
+	<script src="js/ajax.js"> </script>
+	<form>
+		<fieldset>
+			<legend>ส่วนเพิ่มข้อมูลตารางสอน</legend>
+		</fieldset>
+		<label>รหัสวิชา</label>
+		<input type="text" class="span5" placeholder="Example : 4000115Z"></input>
+		<br>
+		<br>
+		<label>ชื่อวิชา</label>		
+		<input type="text" class="span5" placeholder="Example : เทคโนโลยีสารสนเทศเพื่อการศึกษาค้นคว้า"></input>
+		<br>
+		<br>
+		<label>section</label>
+		<input type="text" class="span5" placeholder="Example : 1"></input>
+		<br>
+		<br>
+		<label>เวลาเรียน</label>
+			<table>
+				<tr>
+					<th>วัน</th><th>คาบเริ่มต้น</th><th>คาบสิ้นสุด</th><th>ห้องเรียน</th>
+				</tr>
+				<td><select>
+					<option>จันทร์</option>
+					<option>อังคาร</option>
+					<option>พุธ</option>
+					<option>พฤหัสบดี</option>
+					<option>ศุกร์</option>
+					<option>เสาร์</option>
+					<option>อาทิตย์</option>
+					</select>
+				</td>
+				<td>
+					<center><input type="text" class="span4" placeholder="1-14"></input></center>
+				</td>
+				<td>
+					<center><input type="text" class="span4" placeholder="1-14"></input></center>
+				</td>
+				<td>
+					<center><input type="text" class="span4" placeholder="823"></input></center>
+				</td>
+			</table>
+			<br>
+			<br>
+		<label>รหัสหมู่เรียน</label>
+		<input type="text" placeholder="Example : 550462201" class="span5"></input>
+		<br><br>
+		<label>ชื่อ-สกุล อาจารย์ผู้สอน</label>
+			<table class="myTable">
+				<tr><th></th><th>ชื่อ</th><th>นามสกุล</th></tr>
+				
+					<tr>
+						<td>&nbsp;1&nbsp;</td>
+						<td> <input type="text" placeholder="Example : ประยุทธ์" ></input></td>
+						<td><input type="text" placeholder="Example : จันทร์โอชา" ></input></td>
+					</tr>
+
+				
+				
+			</table>
+			<div><a href="#" class="add_multiple_teacher">กดเพื่อเพิ่มผู้สอน(กรณีมีผู้สอนมากกว่า 1 คน)<input class="number_teacher" type="hidden" value="1"></input></a></div>
+			<br>
+			<br>
+			<div align='center'><button class="btn" type="button">เพิ่มข้อมูลตารางสอน</button></div>
+	</form>
+	<?
+
+}
 	
 
 

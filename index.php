@@ -167,7 +167,7 @@ login();
             <li class="dropdown-submenu"><a tabindex="-1" href="#">จัดการข้อมูลหลัก</a>
     				<ul class="dropdown-menu">
                     <? if($_SESSION['SuperUser']||$_SESSION['Pinsert']){ ?> 
-                        <li><a tabindex="-1" href="#">เพิ่มข้อมูลตารางสอน</a></li>
+                        <li><a tabindex="-1" href="#" class="add_teach">เพิ่มข้อมูลตารางสอน</a></li>
 
                         <? } ?>
                     <? if($_SESSION['SuperUser']||$_SESSION['Insert']) { ?> 
