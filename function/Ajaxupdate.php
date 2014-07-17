@@ -235,15 +235,15 @@ else if($_POST['ajax_update_var']=="add_teach_table"){
 			<legend>ส่วนเพิ่มข้อมูลตารางสอน</legend>
 		</fieldset>
 		<label>รหัสวิชา</label>
-		<input type="text" class="span5" placeholder="Example : 4000115Z"></input>
+		<input type="text" class="span5" id="inst_code" placeholder="Example : 4000115Z"></input>
 		<br>
 		<br>
 		<label>ชื่อวิชา</label>		
-		<input type="text" class="span5" placeholder="Example : เทคโนโลยีสารสนเทศเพื่อการศึกษาค้นคว้า"></input>
+		<input type="text" class="span5" id="inst_name_course" placeholder="Example : เทคโนโลยีสารสนเทศเพื่อการศึกษาค้นคว้า"></input>
 		<br>
 		<br>
 		<label>section</label>
-		<input type="text" class="span5" placeholder="Example : 1"></input>
+		<input type="text" class="span5" "inst_sect" id=placeholder="Example : 1"></input>
 		<br>
 		<br>
 		<label>เวลาเรียน</label>
@@ -251,7 +251,7 @@ else if($_POST['ajax_update_var']=="add_teach_table"){
 				<tr>
 					<th>วัน</th><th>คาบเริ่มต้น</th><th>คาบสิ้นสุด</th><th>ห้องเรียน</th>
 				</tr>
-				<td><select>
+				<td><select id="inst_day">
 					<option>จันทร์</option>
 					<option>อังคาร</option>
 					<option>พุธ</option>
@@ -262,19 +262,19 @@ else if($_POST['ajax_update_var']=="add_teach_table"){
 					</select>
 				</td>
 				<td>
-					<center><input type="text" class="span4" placeholder="1-14"></input></center>
+					<center><input type="text" class="span4" id="inst_pstart" placeholder="1-14"></input></center>
 				</td>
 				<td>
-					<center><input type="text" class="span4" placeholder="1-14"></input></center>
+					<center><input type="text" class="span4" id="inst_pend" placeholder="1-14"></input></center>
 				</td>
 				<td>
-					<center><input type="text" class="span4" placeholder="823"></input></center>
+					<center><input type="text" class="span4" id="inst_room"placeholder="823"></input></center>
 				</td>
 			</table>
 			<br>
 			<br>
 		<label>รหัสหมู่เรียน</label>
-		<input type="text" placeholder="Example : 550462201" class="span5"></input>
+		<input type="text" id="inst_sectcode" placeholder="Example : 550462201" class="span5"></input>
 		<br><br>
 		<label>ชื่อ-สกุล อาจารย์ผู้สอน</label>
 			<table class="myTable">
@@ -292,10 +292,20 @@ else if($_POST['ajax_update_var']=="add_teach_table"){
 			<div><a href="#" class="add_multiple_teacher">กดเพื่อเพิ่มผู้สอน(กรณีมีผู้สอนมากกว่า 1 คน)<input class="number_teacher" type="hidden" value="1"></input></a></div>
 			<br>
 			<br>
-			<div align='center'><button class="btn" type="button">เพิ่มข้อมูลตารางสอน</button></div>
+			<div align='center'><button class="insert_dbtableclk btn" type="button">เพิ่มข้อมูลตารางสอน</button></div>
 	</form>
 	<?
 
+}
+
+else if ($_POST['type_chk']=="listviewfunc"){
+	?>
+	
+	<script src="js/ajax.js"> </script>
+	<br><br>
+	<div>Hello world</div>
+
+	<?
 }
 	
 

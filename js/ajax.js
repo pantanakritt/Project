@@ -384,4 +384,32 @@ $(document).ready(function(){
 
 		});
 
+//----------------------------------------------- List view -------------------------------------------
+
+		$(".list_views").click(function(event){
+			event.preventDefault();
+			listviewfunc("listviewfunc");
+		});
+
+		var listviewfunc = function(type){
+			var data = {"type_chk" : type};
+			ajax_common(data,"function/Ajaxupdate.php","POST",$(".updates"));
+
+		};
+
+//------------------------------------------------ action insert db data table ตารางสอน --------------------
+	
+		$(".insert_dbtableclk").click(function(event){
+			event.preventDefault();
+			var data_table_val = $('#inst_code').val()+'_'+$('#inst_name_course').val()+'_'+$('#inst_sect').val()+'_'+$('#inst_day').val()+'_'+$('#inst_pstart').val()+'_'+$('#inst_pend').val()+'_'+$('#inst_room').val()+'_'+$('#inst_sectcode').val();
+			alert(data_table_val);
+			//takeaction_ins_db("listviewfunc");
+		});
+
+		var takeaction_ins_db = function(type){
+			var data = {"type_chk" : type};
+			ajax_common(data,"function/Ajaxupdate.php","POST",$(".updates"));
+
+		};
+
 	});

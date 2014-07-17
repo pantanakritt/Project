@@ -166,7 +166,8 @@ login();
             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
             <li class="dropdown-submenu"><a tabindex="-1" href="#">จัดการข้อมูลหลัก</a>
     				<ul class="dropdown-menu">
-                    <? if($_SESSION['SuperUser']||$_SESSION['Pinsert']){ ?> 
+                    <? if($_SESSION['SuperUser']||$_SESSION['Pinsert']){ ?>
+                        <li><a tabindex="-1"  href="#" class="list_views">เรียกดูข้อมูลตารางสอนทั้งหมด(list view)</a></li> 
                         <li><a tabindex="-1" href="#" class="add_teach">เพิ่มข้อมูลตารางสอน</a></li>
 
                         <? } ?>
